@@ -51,16 +51,37 @@ function Liblary() {
         photoItemPrice: "K17", //挙式当日写真商品価格記載のセルを設定
 
         photoOption1: "F19", //挙式当日写真オプション１記載のセルを設定
-        photoOption1Price: "K17", //挙式当日写真オプション１価格記載のセルを設定
+        photoOption1Price: "K19", //挙式当日写真オプション１価格記載のセルを設定
 
         photoOption2: "F21", //挙式当日写真オプション２記載のセルを設定
+        photoOption2Price:"K21",//挙式当日写真オプション2価格記載のセルを設定
 
         photographer: "F25", //指名カメラマン記載のセルを設定
+        photographerPrice:"K25",
 
         //フォーマル商品関係
         fmItem: "A17",
         fmItemColor: "D17",
         fmPrice: "E17",
+
+        fmOptionItem1:"A19",
+        fmOptionColor1:"B19",
+        fmOptionPorse1:"C19",
+        fmOptionNumber1:"D19",
+        fmOptionPrice1:"E19",
+
+        fmOptionItem2:"A21",
+        fmOptionColor2:"B21",
+        fmOptionPorse2:"C21",
+        fmOptionNumber2:"D21",
+        fmOptionPrice2:"E21",
+
+        fmOptionItem3:"A25",
+        fmOptionColor3:"B25",
+        fmOptionPorse3:"C25",
+        fmOptionNumber3:"D25",
+        fmOptionPrice3:"E25",
+
 
         //住所関連
         zipAdd: "A12",
