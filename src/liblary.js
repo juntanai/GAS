@@ -814,7 +814,9 @@ function Liblary() {
 
     writeProfitSheet(){
       this._serchScheduleSheet(this.ceremonyDay,this.profitSheetUrl,"売上管理表検索");
-      const writeProfitRow = this._getLastRow(this.profitSheetName.当日写真商品,this.profitSheetItemGet.新郎新婦名+"4",SpreadsheetApp.openByUrl(this.scheduleUrl));
+      const profitStandardCell = this.profitSheetItemGet.新郎新婦名+"4";
+      console.log(profitStandardCell);
+      const writeProfitRow = this._getLastRow(this.profitSheetName.当日写真商品,profitStandardCell,SpreadsheetApp.openByUrl(this.scheduleUrl));
 
       console.log(writeProfitRow);
     }
