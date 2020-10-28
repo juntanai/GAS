@@ -137,8 +137,8 @@ function Liblary() {
         vtrSetItemBgmPrice: "E5", //vtrセット商品BGM価格記載のセルを設定
 
         vtrRecItem: "A8", //VTR記録商品記載のセルを設定
-        vtrSetItemPrice: "D8", //VTR記録商品価格記載のセルを設定
-        vtrSetItemPricePlan: "E8", //VTR記録商品プラン内判定セルを設定
+        vtrRecItemPrice: "D8", //VTR記録商品価格記載のセルを設定
+        vtrRecItemPricePlan: "E8", //VTR記録商品プラン内判定セルを設定
 
         vtrEndItem: "A11", //VTRエンド商品記載のセルを設定
         vtrEndItemPrice: "D11", //VTRエンド商品価格記載のセルを設定
@@ -339,66 +339,67 @@ function Liblary() {
         VTR変動率: "AS",
 
         //前撮り共通項目
-        前撮りお客様挙式日:"B",
-        前撮り撮影日:"C",
-        前撮り撮影場所:"D",
-        前撮り新郎新婦名:"E",
-        前撮りサンプル:"F",
-        前撮りプランナー:"G",
-        前撮りBP担当:"H",
-        
-        前撮り打ち合わせ商品:"I",
-        前撮り確定商品:"J",
-        前撮り打ち合わせ上代:"K",
-        前撮り打ち合わせ下代:"L",
-        前撮り確定上代:"M",
-        前撮り確定下代:"N",
-        前撮り変動率:"O",
+        前撮りお客様挙式日: "B",
+        前撮り撮影日: "C",
+        前撮り撮影場所: "D",
+        前撮り新郎新婦名: "E",
+        前撮りサンプル: "F",
+        前撮りプランナー: "G",
+        前撮りBP担当: "H",
 
-        前撮りオプション1打ち合わせ商品:"P",
-        前撮りオプション1確定商品:"Q",
-        前撮りオプション1打ち合わせ上代:"R",
-        前撮りオプション1打ち合わせ下代:"S",
-        前撮りオプション1確定上代:"T",
-        前撮りオプション1確定下代:"U",
-        
-        前撮りオプション2打ち合わせ商品:"V",
-        前撮りオプション2確定商品:"W",
-        前撮りオプション2打ち合わせ上代:"X",
-        前撮りオプション2打ち合わせ下代:"Y",
-        前撮りオプション2確定上代:"Z",
-        前撮りオプション2確定下代:"AA",
-        
-        前撮りオプション3打ち合わせ商品:"AB",
-        前撮りオプション3確定商品:"AC",
-        前撮りオプション3打ち合わせ上代:"AD",
-        前撮りオプション3打ち合わせ下代:"AE",
-        前撮りオプション3確定上代:"AF",
-        前撮りオプション3確定下代:"AG",
+        前撮り打ち合わせ商品: "I",
+        前撮り確定商品: "J",
+        前撮り打ち合わせ上代: "K",
+        前撮り打ち合わせ下代: "L",
+        前撮り確定上代: "M",
+        前撮り確定下代: "N",
+        前撮り変動率: "O",
 
-        前撮りオプション打ち合わせ総額上代:"AH",
-        前撮りオプション打ち合わせ総額下代:"AI",
-        前撮りオプション確定総額上代:"AJ",
-        前撮りオプション確定総額下代:"AK",
-        前撮りオプション変動率:"AL",
-        
-        前撮り打ち合わせ総額上代:"AM",
-        前撮り打ち合わせ総額下代:"AN",
-        前撮り確定総額上代:"AO",
-        前撮り確定総額下代:"AP",
-        前撮り変動率:"AQ",
+        前撮りオプション1打ち合わせ商品: "P",
+        前撮りオプション1確定商品: "Q",
+        前撮りオプション1打ち合わせ上代: "R",
+        前撮りオプション1打ち合わせ下代: "S",
+        前撮りオプション1確定上代: "T",
+        前撮りオプション1確定下代: "U",
+
+        前撮りオプション2打ち合わせ商品: "V",
+        前撮りオプション2確定商品: "W",
+        前撮りオプション2打ち合わせ上代: "X",
+        前撮りオプション2打ち合わせ下代: "Y",
+        前撮りオプション2確定上代: "Z",
+        前撮りオプション2確定下代: "AA",
+
+        前撮りオプション3打ち合わせ商品: "AB",
+        前撮りオプション3確定商品: "AC",
+        前撮りオプション3打ち合わせ上代: "AD",
+        前撮りオプション3打ち合わせ下代: "AE",
+        前撮りオプション3確定上代: "AF",
+        前撮りオプション3確定下代: "AG",
+
+        前撮りオプション打ち合わせ総額上代: "AH",
+        前撮りオプション打ち合わせ総額下代: "AI",
+        前撮りオプション確定総額上代: "AJ",
+        前撮りオプション確定総額下代: "AK",
+        前撮りオプション変動率: "AL",
+
+        前撮り打ち合わせ総額上代: "AM",
+        前撮り打ち合わせ総額下代: "AN",
+        前撮り確定総額上代: "AO",
+        前撮り確定総額下代: "AP",
+        前撮り変動率: "AQ",
 
         //担当売上票
-        担当初期見積もり総額:"C",
-        担当写真商品総額:"D",
-        担当FM商品総額:"E",
-        担当VTR商品総額:"F",
-        担当打ち合わせ件数:"I"
+        担当初期見積もり総額: "C",
+        担当写真商品総額: "D",
+        担当FM商品総額: "E",
+        担当VTR商品総額: "F",
+        担当打ち合わせ件数: "I",
       };
 
       //以上のセル指定部分を変更すれば簡易的な変更は対応可能（受注書のレイアウト変更など）
 
       //---------------------------------------各種処理を実行する際に必要な値を変数に格納------------------------------------
+
       this.ceremonyDay = this._getInfo("ceremonyDay"); //挙式日取得変数代入
       this.ceremonyTime = this._getInfo("ceremonyTime"); //挙式時間取得変数代入
       this.partyTime = this._getInfo("partyTime"); //披露宴時間取得
@@ -429,16 +430,29 @@ function Liblary() {
       this.photographer = this._getInfo("photographer"); //指名カメラマン商品取得変数代入
       this.photographerPrice = this._getInfo("photographerPrice"); //指名カメラマン価格取得変数代入
 
-      this.fmItem = this._getInfo("fmItem"); //フォーマル商品取得変数代入
-      this.fmItemColor = this._getInfo("fmItemColor"); //フォーマル台紙色取得変数代入
-      this.fmPrice = this._getInfo("fmPrice"); //フォーマル価格取得変数代入
-      
+      //フォーマル商品関係
+      this.fmItem = this._getInfo("fmItem");
+      this.fmItemColor = this._getInfo("fmItemColor");
+      this.fmPrice = this._getInfo("fmPrice");
       //フォーマルオプション
       this.fmOptionItem1 = this._getInfo("fmOptionItem1");
       this.fmOptionColor1 = this._getInfo("fmOptionColor1");
       this.fmOptionPorse1 = this._getInfo("fmOptionPorse1");
       this.fmOptionNumber1 = this._getInfo("fmOptionNumber1");
       this.fmOptionPrice1 = this._getInfo("fmOptionPrice1");
+
+      this.fmOptionItem2 = this._getInfo("fmOptionItem2");
+      this.fmOptionColor2 = this._getInfo("fmOptionColor2");
+      this.fmOptionPorse2 = this._getInfo("fmOptionPorse2");
+      this.fmOptionNumber2 = this._getInfo("fmOptionNumber2");
+      this.fmOptionPrice2 = this._getInfo("fmOptionPrice2");
+
+      this.fmOptionItem3 = this._getInfo("fmOptionItem3");
+      this.fmOptionColor3 = this._getInfo("fmOptionColor3");
+      this.fmOptionPorse3 = this._getInfo("fmOptionPorse3");
+      this.fmOptionNumber3 = this._getInfo("fmOptionNumber3");
+      this.fmOptionPrice3 = this._getInfo("fmOptionPrice3");
+
 
 
 
