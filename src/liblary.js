@@ -5,7 +5,7 @@ function Liblary() {
       //オブジェクト生成時に実行される処理
       //-------------------------------------------基本は変更あってもここ以下のセル等指定部分を触ればOK---------------------------------------
       this.activeSheet = SpreadsheetApp.getActiveSpreadsheet();
-//受注書関連シート名
+      //受注書関連シート名
       this.ps = "photo"; //写真商品のシート名に使用する変数を定義
       this.vs = "VTR"; //VTR商品のシート名に使用する変数を定義
       this.sw = "SW"; //SWシート名を変数に格納
@@ -13,15 +13,16 @@ function Liblary() {
 
       //売上管理表関連シート名
       this.profitSheetName = {
-        "当日写真商品":"当日写真商品",
-        "当日フォーマル商品":"当日フォーマル商品",
-        "当日VTR商品":"当日VTR商品",
-        "南青山ル・アンジェ当日商品総売上":"南青山ル・アンジェ当日商品総売上",
-        "ル・アンジェ前撮り商品 ":"ル・アンジェ前撮り商品 ",
-        "南青山ル・アンジェ担当売上(前撮り除く)":"南青山ル・アンジェ担当売上(前撮り除く)",
-        "青山店前撮り商品 ":"青山店前撮り商品 ",
-        "テラス前撮り商品 ":"テラス前撮り商品 "
-      }
+        当日写真商品: "当日写真商品",
+        当日フォーマル商品: "当日フォーマル商品",
+        当日VTR商品: "当日VTR商品",
+        "南青山ル・アンジェ当日商品総売上": "南青山ル・アンジェ当日商品総売上",
+        "ル・アンジェ前撮り商品 ": "ル・アンジェ前撮り商品 ",
+        "南青山ル・アンジェ担当売上(前撮り除く)":
+          "南青山ル・アンジェ担当売上(前撮り除く)",
+        "青山店前撮り商品 ": "青山店前撮り商品 ",
+        "テラス前撮り商品 ": "テラス前撮り商品 ",
+      };
 
       this.manageSheetUrl =
         "https://docs.google.com/spreadsheets/d/1w7QtLBLsvm1q4ZWGDgrdJDuu0xUTz2CzE_EgkgKIFIY/edit#gid=0"; //施工管理表URL一覧シートのURLを変数に格納
@@ -29,18 +30,18 @@ function Liblary() {
       this.bgmSheetUrl =
         "https://docs.google.com/spreadsheets/d/1XRnzgmbMLXXgTldYC9b8kuixTlGPVpnjCHHA4jD_EJQ/edit#gid=1745565909"; //BGM管理表URLを変数に格納
 
-      this.profitSheetUrl = "https://docs.google.com/spreadsheets/d/1oiLscyxbECQ52rtl7MgVWhhDfS1WYYL1gY3Yr6OR4Ss/edit#gid=0"//売上管理表URLまとめシートURLを変数に格納
+      this.profitSheetUrl =
+        "https://docs.google.com/spreadsheets/d/1oiLscyxbECQ52rtl7MgVWhhDfS1WYYL1gY3Yr6OR4Ss/edit#gid=0"; //売上管理表URLまとめシートURLを変数に格納
 
       const totalCell = "A1:L80"; //シートの読み取り範囲全体のセル範囲指定
-      const profitSheetTotalCell = "A1:AZ600"//売上管理表で使用しているセル範囲を指定
-
+      const profitSheetTotalCell = "A1:AZ600"; //売上管理表で使用しているセル範囲を指定
 
       const cutTotalCell = totalCell.split(""); //全体のセル範囲文字列を１文字ずつ配列格納
       this.lastColumn = cutTotalCell[3]; //セルのcolumの最も使われている範囲のアルファベットのみ抜き出す
 
       const cutProfitTotalCell = profitSheetTotalCell.split("");
-      this.profitSheetLastColumn = cutProfitTotalCell[3]+cutProfitTotalCell[4];//売上管理表columの最大で使われている範囲のアルファベットのみ抜き出す
-
+      this.profitSheetLastColumn =
+        cutProfitTotalCell[3] + cutProfitTotalCell[4]; //売上管理表columの最大で使われている範囲のアルファベットのみ抜き出す
 
       const psgets = this._setCell(this.ps, totalCell); //photoシート要素全取得
       this.psArray = this._margeArray(psgets); //photoシート要素１時配列化
@@ -70,95 +71,95 @@ function Liblary() {
         //写真商品関連
         photoItem: "F17", //挙式当日写真商品記載のセルを設定
         photoItemPrice: "K17", //挙式当日写真商品価格記載のセルを設定
-        photoItemPlan:"L17",//プラン内の有無記載のセルを設定
+        photoItemPlan: "L17", //プラン内の有無記載のセルを設定
 
         photoOption1: "F19", //挙式当日写真オプション１記載のセルを設定
         photoOption1Price: "K19", //挙式当日写真オプション１価格記載のセルを設定
 
         photoOption2: "F21", //挙式当日写真オプション２記載のセルを設定
-        photoOption2Price:"K21",//挙式当日写真オプション2価格記載のセルを設定
+        photoOption2Price: "K21", //挙式当日写真オプション2価格記載のセルを設定
 
         photographer: "F25", //指名カメラマン記載のセルを設定
-        photographerPrice:"K25",//指名フォトグラファー価格記載のセルを設定
+        photographerPrice: "K25", //指名フォトグラファー価格記載のセルを設定
 
         //フォーマル商品関係
-        fmItem: "A17",//フォーマル商品記載のセルを設定
-        fmItemColor: "D17",//フォーマル商品台紙色記載のセルを設定
-        fmPrice: "E17",//フォーマル価格記載のセルを設定
+        fmItem: "A17", //フォーマル商品記載のセルを設定
+        fmItemColor: "D17", //フォーマル商品台紙色記載のセルを設定
+        fmPrice: "E17", //フォーマル価格記載のセルを設定
 
-        fmOptionItem1:"A19",//フォーマルオプション記載のセルを設定
-        fmOptionColor1:"B19",//フォーマルオプション色記載のセルを設定
-        fmOptionPorse1:"C19",//フォーマルオプションポーズ記載のセルを設定
-        fmOptionNumber1:"D19",//フォーマルオプション冊数記載のセルを設定
-        fmOptionPrice1:"E19",//フォーマルオプション価格記載のセルを設定
+        fmOptionItem1: "A19", //フォーマルオプション記載のセルを設定
+        fmOptionColor1: "B19", //フォーマルオプション色記載のセルを設定
+        fmOptionPorse1: "C19", //フォーマルオプションポーズ記載のセルを設定
+        fmOptionNumber1: "D19", //フォーマルオプション冊数記載のセルを設定
+        fmOptionPrice1: "E19", //フォーマルオプション価格記載のセルを設定
 
-        fmOptionItem2:"A21",//フォーマルオプション記載のセルを設定
-        fmOptionColor2:"B21",//フォーマルオプション色記載のセルを設定
-        fmOptionPorse2:"C21",//フォーマルオプションポーズ記載のセルを設定
-        fmOptionNumber2:"D21",//フォーマルオプション冊数記載のセルを設定
-        fmOptionPrice2:"E21",//フォーマルオプション価格記載のセルを設定
+        fmOptionItem2: "A21", //フォーマルオプション記載のセルを設定
+        fmOptionColor2: "B21", //フォーマルオプション色記載のセルを設定
+        fmOptionPorse2: "C21", //フォーマルオプションポーズ記載のセルを設定
+        fmOptionNumber2: "D21", //フォーマルオプション冊数記載のセルを設定
+        fmOptionPrice2: "E21", //フォーマルオプション価格記載のセルを設定
 
-        fmOptionItem3:"A25",//フォーマルオプション記載のセルを設定
-        fmOptionColor3:"B25",//フォーマルオプション色記載のセルを設定
-        fmOptionPorse3:"C25",//フォーマルオプションポーズ記載のセルを設定
-        fmOptionNumber3:"D25",//フォーマルオプション冊数記載のセルを設定
-        fmOptionPrice3:"E25",//フォーマルオプション価格記載のセルを設定
+        fmOptionItem3: "A25", //フォーマルオプション記載のセルを設定
+        fmOptionColor3: "B25", //フォーマルオプション色記載のセルを設定
+        fmOptionPorse3: "C25", //フォーマルオプションポーズ記載のセルを設定
+        fmOptionNumber3: "D25", //フォーマルオプション冊数記載のセルを設定
+        fmOptionPrice3: "E25", //フォーマルオプション価格記載のセルを設定
 
         //前撮り商品関係
-        prephotoItem1:"A28",//前撮り商品記載のセルを設定
-        prephotoItem2:"A30",//前撮り商品記載のセルを設定
-        prephotoItem3:"A34",//前撮り商品記載のセルを設定
+        prephotoItem1: "A28", //前撮り商品記載のセルを設定
+        prephotoItem2: "A30", //前撮り商品記載のセルを設定
+        prephotoItem3: "A34", //前撮り商品記載のセルを設定
 
-        prephotoItem1Price:"E28",//前撮り商品価格記載のセルを設定
-        prephotoItem2Price:"E30",//前撮り商品価格記載のセルを設定
-        prephotoItem3Price:"E34",//前撮り商品価格記載のセルを設定
+        prephotoItem1Price: "E28", //前撮り商品価格記載のセルを設定
+        prephotoItem2Price: "E30", //前撮り商品価格記載のセルを設定
+        prephotoItem3Price: "E34", //前撮り商品価格記載のセルを設定
 
-        prephotoOption1:"A37",//前撮り商品オプション記載のセルを設定
-        prephotoOption2:"A38",//前撮り商品オプション記載のセルを設定
-        prephotoOption3:"A39",//前撮り商品オプション記載のセルを設定
+        prephotoOption1: "A37", //前撮り商品オプション記載のセルを設定
+        prephotoOption2: "A38", //前撮り商品オプション記載のセルを設定
+        prephotoOption3: "A39", //前撮り商品オプション記載のセルを設定
 
-        prephotoOption1Price:"E37",//前撮り商品オプション価格記載のセルを設定
-        prephotoOption2Price:"E38",//前撮り商品オプション価格記載のセルを設定
-        prephotoOption3Price:"E39",//前撮り商品オプション価格記載のセルを設定
+        prephotoOption1Price: "E37", //前撮り商品オプション価格記載のセルを設定
+        prephotoOption2Price: "E38", //前撮り商品オプション価格記載のセルを設定
+        prephotoOption3Price: "E39", //前撮り商品オプション価格記載のセルを設定
 
         //住所関連
-        zipAdd: "A12",//郵便番号記載セルを設定
-        Adress1: "A13",//住所記載セルを設定
-        Adress2: "E13",//住所記載セルを設定
+        zipAdd: "A12", //郵便番号記載セルを設定
+        Adress1: "A13", //住所記載セルを設定
+        Adress2: "E13", //住所記載セルを設定
 
         //VTRシート記載項目-------------------------------------------
 
         //vtr商品関係
-        vtrSetItem: "A3",//VTRセット商品記載セルを設定
-        vtrSetItemPrice: "D3",//VTRセット商品価格記載のセルを設定
-        vtrSetItemPricePlan: "E3",//VTRセット商品プラン内判定セルを設定
-        vtrSetItemBgm: "A5",//VTRセット商品BGM記載のセルを設定
-        vtrSetItemBgmPrice: "E5",//vtrセット商品BGM価格記載のセルを設定
-        
-        vtrRecItem: "A8",//VTR記録商品記載のセルを設定
-        vtrSetItemPrice: "D8",//VTR記録商品価格記載のセルを設定
-        vtrSetItemPricePlan: "E8",//VTR記録商品プラン内判定セルを設定
-        
-        vtrEndItem: "A11",//VTRエンド商品記載のセルを設定
-        vtrEndItemPrice: "D11",//VTRエンド商品価格記載のセルを設定
-        vtrEndItemPricePlan: "E11",//VTRエンド商品プラン判定記載セルを設定
-        vtrEndItemBgm: "A13",//VTRエンド商品BGM記載セルを設定
-        vtrEndItemBgmPrice: "E13",//VTRエンド商品BGM価格記載セルを設定
+        vtrSetItem: "A3", //VTRセット商品記載セルを設定
+        vtrSetItemPrice: "D3", //VTRセット商品価格記載のセルを設定
+        vtrSetItemPricePlan: "E3", //VTRセット商品プラン内判定セルを設定
+        vtrSetItemBgm: "A5", //VTRセット商品BGM記載のセルを設定
+        vtrSetItemBgmPrice: "E5", //vtrセット商品BGM価格記載のセルを設定
 
-        vtrProfileItem:"A16",//VTRプロフィール商品記載セルを設定
-        vtrProfileItemPrice:"D16",//VTRプロフィール商品価格記載セルを設定
-        vtrProfileItemBgm:"A18",//VTRプロフィール商品BGM記載セルを設定
-        vtrProfileItemBgmPrice:"D18",//VTRプロフィール商品BGM価格記載セルを設定
+        vtrRecItem: "A8", //VTR記録商品記載のセルを設定
+        vtrSetItemPrice: "D8", //VTR記録商品価格記載のセルを設定
+        vtrSetItemPricePlan: "E8", //VTR記録商品プラン内判定セルを設定
 
-        vtrOption1:"A22",//VTRオプション商品記載のセルを設定
-        vtrOption1Price:"D22",//VTRオプション商品価格記載のセルを設定
-        vtrOption2:"A23",//VTRオプション商品記載のセルを設定
-        vtrOption2Price:"D23",//VTRオプション商品価格記載のセルを設定
-        vtrOption3:"A24",//VTRオプション商品記載のセルを設定
-        vtrOption3Price:"A24",//VTRオプション商品価格記載のセルを設定
-        vtrTelop:"A26",//VTRテロップ記載のセルを設定
-        vtrTelopPrice:"D26",//VTRテロップ価格記載のセルを設定
-        
+        vtrEndItem: "A11", //VTRエンド商品記載のセルを設定
+        vtrEndItemPrice: "D11", //VTRエンド商品価格記載のセルを設定
+        vtrEndItemPricePlan: "E11", //VTRエンド商品プラン判定記載セルを設定
+        vtrEndItemBgm: "A13", //VTRエンド商品BGM記載セルを設定
+        vtrEndItemBgmPrice: "E13", //VTRエンド商品BGM価格記載セルを設定
+
+        vtrProfileItem: "A16", //VTRプロフィール商品記載セルを設定
+        vtrProfileItemPrice: "D16", //VTRプロフィール商品価格記載セルを設定
+        vtrProfileItemBgm: "A18", //VTRプロフィール商品BGM記載セルを設定
+        vtrProfileItemBgmPrice: "D18", //VTRプロフィール商品BGM価格記載セルを設定
+
+        vtrOption1: "A22", //VTRオプション商品記載のセルを設定
+        vtrOption1Price: "D22", //VTRオプション商品価格記載のセルを設定
+        vtrOption2: "A23", //VTRオプション商品記載のセルを設定
+        vtrOption2Price: "D23", //VTRオプション商品価格記載のセルを設定
+        vtrOption3: "A24", //VTRオプション商品記載のセルを設定
+        vtrOption3Price: "A24", //VTRオプション商品価格記載のセルを設定
+        vtrTelop: "A26", //VTRテロップ記載のセルを設定
+        vtrTelopPrice: "D26", //VTRテロップ価格記載のセルを設定
+
         //SWシート記載項目--------------------------------------------
 
         //変更関係
@@ -171,14 +172,14 @@ function Liblary() {
         ChangeRecordTextCellSet: "B", //変更の詳細を記載する行を設定
 
         //swシートのチェック項目関係
-        checkVtrMail: "E6",//VTRメール可否チェック欄を設定
-        checkProfileMail: "E7",//プロフィールメールチェック欄を設定
-        checkSchedule: "E8",//施工管理表チェック欄を設定
+        checkVtrMail: "E6", //VTRメール可否チェック欄を設定
+        checkProfileMail: "E7", //プロフィールメールチェック欄を設定
+        checkSchedule: "E8", //施工管理表チェック欄を設定
 
         activeSheetUrl: "A22", //共有URLが記載するセルを設定
 
-        vtrMailTextOption: "D26",//VTRにメールを送る際の備考欄を設定
-        profileMailTextOption: "D35",//プロフィールにメールを送る際の備考欄を設定
+        vtrMailTextOption: "D26", //VTRにメールを送る際の備考欄を設定
+        profileMailTextOption: "D35", //プロフィールにメールを送る際の備考欄を設定
       };
 
       //施工管理表に記載する際の配列まとめ
@@ -192,157 +193,151 @@ function Liblary() {
 
       //売上管理表の項目ごとの列番号配列
       this.profitSheetItemGet = {
-        "受注日":"B",
-        "施行日":"C",
-        "挙式場":"D",
-        "披露宴会場":"E",
-        "新郎新婦名":"F",
-        "サンプル":"G",
-        "プランナー":"H",
-        "BP担当":"I",
-
+        //挙式当日商品共通
+        受注日: "B",
+        施行日: "C",
+        挙式場: "D",
+        披露宴会場: "E",
+        新郎新婦名: "F",
+        サンプル: "G",
+        プランナー: "H",
+        BP担当: "I",
 
         //当日写真シート
-        "初期見積もり商品":"J",
-        "初期見積もり上代":"K",
-        "初期見積もり下代":"L",
+        初期見積もり商品: "J",
+        初期見積もり上代: "K",
+        初期見積もり下代: "L",
 
-        "打ち合わせ時当日撮影商品":"M",
-        "確定時当日撮影商品":"N",
-        "打ち合わせ撮影商品上代":"O",
-        "打ち合わせ撮影商品下代":"P",
-        "確定撮影商品上代":"Q",
-        "確定撮影商品下代":"R",
-        "撮影商品変動率":"S",
+        打ち合わせ時当日撮影商品: "M",
+        確定時当日撮影商品: "N",
+        打ち合わせ撮影商品上代: "O",
+        打ち合わせ撮影商品下代: "P",
+        確定撮影商品上代: "Q",
+        確定撮影商品下代: "R",
+        撮影商品変動率: "S",
 
-        "打ち合わせ時オプション1商品":"T",
-        "確定オプション1商品":"U",
-        "オプション1打ち合わせ上代":"V",
-        "オプション1打ち合わせ下代":"W",
-        "オプション1確定上代":"X",
-        "オプション1確定下代":"Y",
-        
-        "打ち合わせ時オプション2商品":"Z",
-        "確定オプション2商品":"AA",
-        "オプション2打ち合わせ上代":"AB",
-        "オプション2打ち合わせ下代":"AC",
-        "オプション2確定上代":"AD",
-        "オプション2確定下代":"AE",
-        
-        "打ち合わせ時指名商品":"AF",
-        "確定指名商品":"AG",
-        "指名打ち合わせ上代":"AH",
-        "指名打ち合わせ下代":"AI",
-        "指名確定上代":"AJ",
-        "指名確定下代":"AK",
-        
-        "打ち合わせ時オプション総額上代":"AL",
-        "打ち合わせオプション総額下代":"AM",
-        "確定オプション総額上代":"AN",
-        "確定オプション総額下代":"AO",
-        "オプション変動率":"AP",
+        打ち合わせ時オプション1商品: "T",
+        確定オプション1商品: "U",
+        オプション1打ち合わせ上代: "V",
+        オプション1打ち合わせ下代: "W",
+        オプション1確定上代: "X",
+        オプション1確定下代: "Y",
 
+        打ち合わせ時オプション2商品: "Z",
+        確定オプション2商品: "AA",
+        オプション2打ち合わせ上代: "AB",
+        オプション2打ち合わせ下代: "AC",
+        オプション2確定上代: "AD",
+        オプション2確定下代: "AE",
 
-        "写真打ち合わせ総額上代":"AQ",
-        "写真打ち合わせ総額下代":"AR",
-        "写真確定総額上代":"AS",
-        "写真確定総額下代":"AT",
-        "写真総額変動率":"AU",
-        
-        
+        打ち合わせ時指名商品: "AF",
+        確定指名商品: "AG",
+        指名打ち合わせ上代: "AH",
+        指名打ち合わせ下代: "AI",
+        指名確定上代: "AJ",
+        指名確定下代: "AK",
+
+        打ち合わせ時オプション総額上代: "AL",
+        打ち合わせオプション総額下代: "AM",
+        確定オプション総額上代: "AN",
+        確定オプション総額下代: "AO",
+        オプション変動率: "AP",
+
+        写真打ち合わせ総額上代: "AQ",
+        写真打ち合わせ総額下代: "AR",
+        写真確定総額上代: "AS",
+        写真確定総額下代: "AT",
+        写真総額変動率: "AU",
+
         //FMシート
-        "FM初期見積もり商品":"J",
-        "FM初期見積もり上代":"K",
-        "FM初期見積もり下代":"L",
+        FM初期見積もり商品: "J",
+        FM初期見積もり上代: "K",
+        FM初期見積もり下代: "L",
 
-        "FM打ち合わせ時当日撮影商品":"M",
-        "FM確定時当日撮影商品":"N",
-        "FM打ち合わせ撮影商品上代":"O",
-        "FM打ち合わせ撮影商品下代":"P",
-        "FM確定撮影商品上代":"Q",
-        "FM確定撮影商品下代":"R",
-        "FM撮影商品変動率":"S",
+        FM打ち合わせ時当日撮影商品: "M",
+        FM確定時当日撮影商品: "N",
+        FM打ち合わせ撮影商品上代: "O",
+        FM打ち合わせ撮影商品下代: "P",
+        FM確定撮影商品上代: "Q",
+        FM確定撮影商品下代: "R",
+        FM撮影商品変動率: "S",
 
-        "FM打ち合わせ時オプション1商品":"T",
-        "FM確定オプション1商品":"U",
-        "FMオプション1打ち合わせ上代":"V",
-        "FMオプション1打ち合わせ下代":"W",
-        "FMオプション1確定上代":"X",
-        "FMオプション1確定下代":"Y",
-        
-        "FM打ち合わせ時オプション2商品":"Z",
-        "FM確定オプション2商品":"AA",
-        "FMオプション2打ち合わせ上代":"AB",
-        "FMオプション2打ち合わせ下代":"AC",
-        "FMオプション2確定上代":"AD",
-        "FMオプション2確定下代":"AE",
-        
-        "FM打ち合わせ時オプション3商品":"AF",
-        "FM確定オプション3商品":"AG",
-        "FMオプション3打ち合わせ上代":"AH",
-        "FMオプション3打ち合わせ下代":"AI",
-        "FMオプション3確定上代":"AJ",
-        "FMオプション3確定下代":"AK",
-        
-        "FM打ち合わせ時オプション総額上代":"AL",
-        "FM打ち合わせオプション総額下代":"AM",
-        "FM確定オプション総額上代":"AN",
-        "FM確定オプション総額下代":"AO",
-        "FMオプション変動率":"AP",
+        FM打ち合わせ時オプション1商品: "T",
+        FM確定オプション1商品: "U",
+        FMオプション1打ち合わせ上代: "V",
+        FMオプション1打ち合わせ下代: "W",
+        FMオプション1確定上代: "X",
+        FMオプション1確定下代: "Y",
 
+        FM打ち合わせ時オプション2商品: "Z",
+        FM確定オプション2商品: "AA",
+        FMオプション2打ち合わせ上代: "AB",
+        FMオプション2打ち合わせ下代: "AC",
+        FMオプション2確定上代: "AD",
+        FMオプション2確定下代: "AE",
 
-        "FM打ち合わせ総額上代":"AQ",
-        "FM打ち合わせ総額下代":"AR",
-        "FM確定総額上代":"AS",
-        "FM確定総額下代":"AT",
-        "FM総額変動率":"AU",
+        FM打ち合わせ時オプション3商品: "AF",
+        FM確定オプション3商品: "AG",
+        FMオプション3打ち合わせ上代: "AH",
+        FMオプション3打ち合わせ下代: "AI",
+        FMオプション3確定上代: "AJ",
+        FMオプション3確定下代: "AK",
+
+        FM打ち合わせ時オプション総額上代: "AL",
+        FM打ち合わせオプション総額下代: "AM",
+        FM確定オプション総額上代: "AN",
+        FM確定オプション総額下代: "AO",
+        FMオプション変動率: "AP",
+
+        FM打ち合わせ総額上代: "AQ",
+        FM打ち合わせ総額下代: "AR",
+        FM確定総額上代: "AS",
+        FM確定総額下代: "AT",
+        FM総額変動率: "AU",
 
         //VTRシート
-        "VTR初期見積もり商品":"J",
-        "VTR初期見積もり上代":"K",
-        "VTR初期見積もり下代":"L",
+        VTR初期見積もり商品: "J",
+        VTR初期見積もり上代: "K",
+        VTR初期見積もり下代: "L",
 
-        "VTRエンド打ち合わせ時商品":"M",
-        "VTRエンド確定時商品":"N",
-        "VTRエンド打ち合わせ上代":"O",
-        "VTRエンド打ち合わせ下代":"P",
-        "VTRエンド確定上代":"Q",
-        "VTRエンド確定下代":"R",
-        "VTRエンド変動率":"S",
+        VTRエンド打ち合わせ時商品: "M",
+        VTRエンド確定時商品: "N",
+        VTRエンド打ち合わせ上代: "O",
+        VTRエンド打ち合わせ下代: "P",
+        VTRエンド確定上代: "Q",
+        VTRエンド確定下代: "R",
+        VTRエンド変動率: "S",
 
-        "VTR記録打ち合わせ時商品":"T",
-        "VTR記録確定商品":"U",
-        "VTR記録打ち合わせ上代":"V",
-        "VTR記録打ち合わせ下代":"W",
-        "VTR記録確定上代":"X",
-        "VTR記録確定下代":"Y",
-        "VTR記録商品変動率":"Z",
+        VTR記録打ち合わせ時商品: "T",
+        VTR記録確定商品: "U",
+        VTR記録打ち合わせ上代: "V",
+        VTR記録打ち合わせ下代: "W",
+        VTR記録確定上代: "X",
+        VTR記録確定下代: "Y",
+        VTR記録商品変動率: "Z",
 
-        "VTRセット打ち合わせ時商品":"AA",
-        "VTRセット確定商品":"AB",
-        "VTRセット打ち合わせ上代":"AC",
-        "VTRセット打ち合わせ下代":"AD",
-        "VTRセット確定上代":"AE",
-        "VTRセット確定下代":"AF",
-        "VTRセット変動率":"AG",
+        VTRセット打ち合わせ時商品: "AA",
+        VTRセット確定商品: "AB",
+        VTRセット打ち合わせ上代: "AC",
+        VTRセット打ち合わせ下代: "AD",
+        VTRセット確定上代: "AE",
+        VTRセット確定下代: "AF",
+        VTRセット変動率: "AG",
 
-        "VTRプロフィール打ち合わせ時商品":"AH",
-        "VTRプロフィール確定時商品":"AI",
-        "VTRプロフィール打ち合わせ上代":"AJ",
-        "VTRプロフィール打ち合わせ下代":"AK",
-        "VTRプロフィールプロフィール確定上代":"AL",
-        "VTRプロフィールプロフィール確定下代":"AM",
-        "VTRプロフィール変動率":"AN",
+        VTRプロフィール打ち合わせ時商品: "AH",
+        VTRプロフィール確定時商品: "AI",
+        VTRプロフィール打ち合わせ上代: "AJ",
+        VTRプロフィール打ち合わせ下代: "AK",
+        VTRプロフィールプロフィール確定上代: "AL",
+        VTRプロフィールプロフィール確定下代: "AM",
+        VTRプロフィール変動率: "AN",
 
-        "VTR打ち合わせ総額上代":"AO",
-        "VTR打ち合わせ総額下代":"AP",
-        "VTR確定総額上代":"AQ",
-        "VTR確定総額下代":"AR",
-        "VTR変動率":"AS"
-        
-        
-      }
-
+        VTR打ち合わせ総額上代: "AO",
+        VTR打ち合わせ総額下代: "AP",
+        VTR確定総額上代: "AQ",
+        VTR確定総額下代: "AR",
+        VTR変動率: "AS",
+      };
 
       //以上のセル指定部分を変更すれば簡易的な変更は対応可能（受注書のレイアウト変更など）
 
@@ -433,8 +428,8 @@ function Liblary() {
     }
     //以上必要な値の変数格納終了
 
-    
-    start() {//記入開始時に必ず使用する関数
+    start() {
+      //記入開始時に必ず使用する関数
       if (
         this.MenWomenName === "" ||
         !this.MenWomenName ||
@@ -455,7 +450,8 @@ function Liblary() {
       }
     }
 
-    writeAnotherSheet(change = this.change) {//--------------------------------施工管理表に記載するための関数----------------------------------------
+    writeAnotherSheet(change = this.change) {
+      //--------------------------------施工管理表に記載するための関数----------------------------------------
       this.CeremonyPartyTime =
         this.ceremonyTimeFormat + " " + "(" + this.partyTimeFormat + ")"; //施工管理表シートに記載する形式に時間をフォーマットする
 
@@ -768,8 +764,6 @@ function Liblary() {
       }
     }
 
-
-
     _endProcessing() {
       //-------------------------------処理終了後の終了関数--------------------------------
       this._cellWriteActive(
@@ -824,50 +818,66 @@ function Liblary() {
       return array[1 + array.indexOf(key)];
     }
 
-    _getArrayNumber(cell,lastColumn = this.lastColumn) {
+    _getArrayNumber(cell, lastColumn = this.lastColumn) {
       //------------------スプレッドシートすべて取りこんだ配列よりセル番号で情報を引き出すための変換関数
-      
+
       const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
       const alphabetArray = alphabet.split("");
       const Numbers = "1234567890";
       const NumbersArray = Numbers.split("");
       const strCell = cell.split("");
       const lastColumnArray = lastColumn.split("");
-      
-if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&lastColumnArray.length===1){//読み取り指定のセルが英字１桁それ以降数字構成（例A12,B4など）で、最終列が英字一文字のとき（例Jなど）
-      var strCellRow = Number(cell.slice(1));
-      var totalCoNumber = alphabet.indexOf(strCell[0]);
 
-      var totalLastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
-      
-}else if(alphabetArray.includes(strCell[0]) && alphabetArray.includes(strCell[1])&&lastColumnArray.length===2){//読み取り指定のセルが英字２数字１から２で構成（例AA12,AB4など）で、最終列が英字2文字のとき（例ABなど）
-  var strCellRow = Number(cell.slice(2));
-  const coNumber = alphabet.indexOf(strCell[0])+1;
-  const coNumber2 = alphabet.indexOf(strCell[1]);
-  var totalCoNumber = coNumber * 26 + coNumber2;
-  
-  
-  
-  var lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
-  var lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
-  var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
-}else if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&lastColumnArray.length===2){//読み取り指定のセルが英字1数字１以上で構成（例AA12,AB4など）で、最終列が英字2文字のとき（例ABなど）
-  var strCellRow = Number(cell.slice(1));
-  var totalCoNumber = alphabet.indexOf(strCell[0]);
-  
-  var lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
-  var lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
-  var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
-}
-  return (strCellRow - 1) * totalLastColumnNumber + totalCoNumber;
-}
+      if (
+        alphabetArray.includes(strCell[0]) &&
+        NumbersArray.includes(strCell[1]) &&
+        lastColumnArray.length === 1
+      ) {
+        //読み取り指定のセルが英字１桁それ以降数字構成（例A12,B4など）で、最終列が英字一文字のとき（例Jなど）
+        var strCellRow = Number(cell.slice(1));
+        var totalCoNumber = alphabet.indexOf(strCell[0]);
+
+        var totalLastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+      } else if (
+        alphabetArray.includes(strCell[0]) &&
+        alphabetArray.includes(strCell[1]) &&
+        lastColumnArray.length === 2
+      ) {
+        //読み取り指定のセルが英字２数字１から２で構成（例AA12,AB4など）で、最終列が英字2文字のとき（例ABなど）
+        var strCellRow = Number(cell.slice(2));
+        const coNumber = alphabet.indexOf(strCell[0]) + 1;
+        const coNumber2 = alphabet.indexOf(strCell[1]);
+        var totalCoNumber = coNumber * 26 + coNumber2;
+
+        var lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+        var lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
+        var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
+      } else if (
+        alphabetArray.includes(strCell[0]) &&
+        NumbersArray.includes(strCell[1]) &&
+        lastColumnArray.length === 2
+      ) {
+        //読み取り指定のセルが英字1数字１以上で構成（例AA12,AB4など）で、最終列が英字2文字のとき（例ABなど）
+        var strCellRow = Number(cell.slice(1));
+        var totalCoNumber = alphabet.indexOf(strCell[0]);
+
+        var lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+        var lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
+        var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
+      }
+      return (strCellRow - 1) * totalLastColumnNumber + totalCoNumber;
+    }
 
     _getInfo(key1, array = this.psArray) {
       //----------------配列よりスプレッドシートのセル番号から情報を取り出す関数------------------
       return array[this._getArrayNumber(this.ItemGetCellArray[key1])];
     }
 
-    _serchScheduleSheet(day = this.ceremonyDay,url = this.manageSheetUrl,sheetname = "施工管理表検索") {
+    _serchScheduleSheet(
+      day = this.ceremonyDay,
+      url = this.manageSheetUrl,
+      sheetname = "施工管理表検索"
+    ) {
       //以下施工管理表URL一覧シートより該当の施工管理表URLを検索する関数------------------------------------------
       const sheet_serch_day = this._dayFormat(day, "yyyy/MM");
       var col = "A";
@@ -1095,7 +1105,7 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
       return indexArray;
     }
 
-    _totalValueStaff(url,sheet,RowArray,column) {
+    _totalValueStaff(url, sheet, RowArray, column) {
       //----------------------------列番号の配列を利用して利用して同じ行の異なった列のデータを配列に格納する。--------------
       const valueArray = [];
       RowArray.forEach(function (el) {
@@ -1111,25 +1121,45 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
       });
     }
 
-    _profitSheetPersonTotal(profitDay,targetProfitSheetName,personKey,ItemGetRow){//売上管理表の担当者ごとの売上合計を求める関数
-      const profitRange = this.profitSheetItemGet.BP担当 + "4" +":"+this.profitSheetItemGet.BP担当+"800";
-      
-            const profitSheetUrl =this._serchScheduleSheet(profitDay,this.profitSheetUrl,"シート1")//対象の売上管理表を取得
-      
-      
-            const PersonCellArray =this._setCellUrl(profitSheetUrl,targetProfitSheetName,profitRange);//売上管理表の担当者列からデータを取得
-            
-            const photoPersonRowArray=this._serchIndex(PersonCellArray,personKey);//特定の担当者のお客様情報が記載された列番号を配列にする
-            
-      
-            //該当担当者が打ち合わせしたお客様の各価格を配列に格納する
-            const FirstPriceArray = this._totalValueStaff(profitSheetUrl,targetProfitSheetName,photoPersonRowArray,ItemGetRow);
-            
-            //配列に格納したお客様の価格を合計する
-             return this._arrayTotal(FirstPriceArray);
-          }
-      
+    _profitSheetPersonTotal(
+      profitDay,
+      targetProfitSheetName,
+      personKey,
+      ItemGetRow
+    ) {
+      //売上管理表の担当者ごとの売上合計を求める関数
+      const profitRange =
+        this.profitSheetItemGet.BP担当 +
+        "4" +
+        ":" +
+        this.profitSheetItemGet.BP担当 +
+        "800";
 
+      const profitSheetUrl = this._serchScheduleSheet(
+        profitDay,
+        this.profitSheetUrl,
+        "シート1"
+      ); //対象の売上管理表を取得
+
+      const PersonCellArray = this._setCellUrl(
+        profitSheetUrl,
+        targetProfitSheetName,
+        profitRange
+      ); //売上管理表の担当者列からデータを取得
+
+      const photoPersonRowArray = this._serchIndex(PersonCellArray, personKey); //特定の担当者のお客様情報が記載された列番号を配列にする
+
+      //該当担当者が打ち合わせしたお客様の各価格を配列に格納する
+      const FirstPriceArray = this._totalValueStaff(
+        profitSheetUrl,
+        targetProfitSheetName,
+        photoPersonRowArray,
+        ItemGetRow
+      );
+
+      //配列に格納したお客様の価格を合計する
+      return this._arrayTotal(FirstPriceArray);
+    }
   }
 
   //--------------------以上オブジェクト---------------------------------------------
