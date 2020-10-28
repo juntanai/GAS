@@ -419,11 +419,28 @@ function Liblary() {
       this.zipAdd = this._getInfo("zipAdd"); //お客様住所郵便番号取得変数代入
 
       this.photoItem = this._getInfo("photoItem"); //写真商品取得変数代入
+      this.photoItemPrice = this._getInfo("photoItemPrice");
+      this.photoItemPlan = this._getInfo("photoItemPlan");
+      this.photoOption1 = this._getInfo("photoOption1");
+      this.photoOption1Price = this._getInfo("photoOption1Price");
+      this.photoOption2 = this._getInfo("photoOption2");
+      this.photoOption2Price = this._getInfo("photoOption2Price");
+
       this.photographer = this._getInfo("photographer"); //指名カメラマン商品取得変数代入
+      this.photographerPrice = this._getInfo("photographerPrice"); //指名カメラマン価格取得変数代入
 
       this.fmItem = this._getInfo("fmItem"); //フォーマル商品取得変数代入
       this.fmItemColor = this._getInfo("fmItemColor"); //フォーマル台紙色取得変数代入
       this.fmPrice = this._getInfo("fmPrice"); //フォーマル価格取得変数代入
+      
+      //フォーマルオプション
+      this.fmOptionItem1 = this._getInfo("fmOptionItem1");
+      this.fmOptionColor1 = this._getInfo("fmOptionColor1");
+      this.fmOptionPorse1 = this._getInfo("fmOptionPorse1");
+      this.fmOptionNumber1 = this._getInfo("fmOptionNumber1");
+      this.fmOptionPrice1 = this._getInfo("fmOptionPrice1");
+
+
 
       this.vtrSetItem = this._getInfo("vtrSetItem", this.vsArray); //VTRのセットアイテムを取得変数代入
       this.vtrRecItem = this._getInfo("vtrRecItem", this.vsArray); //記録映像を取得変数代入
