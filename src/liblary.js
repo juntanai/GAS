@@ -663,7 +663,7 @@ function Liblary() {
       const strCell = cell.split("");
       const lastColumnArray = lastColumn.split("");
       
-if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&lastColumnArray.length===1){//読み取り指定のセルが英字１数字１から２で構成（例A12,B4など）で、最終列が英字一文字のとき（例Jなど）
+if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&lastColumnArray.length===1){//読み取り指定のセルが英字１桁それ以降数字構成（例A12,B4など）で、最終列が英字一文字のとき（例Jなど）
       var strCellRow = Number(cell.slice(1));
       var totalCoNumber = alphabet.indexOf(strCell[0]);
 
@@ -677,12 +677,17 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
   
   
   
-  const lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
-  const lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
+  var lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+  var lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
+  var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
+}else if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&lastColumnArray.length===2){//読み取り指定のセルが英字1数字１以上で構成（例AA12,AB4など）で、最終列が英字2文字のとき（例ABなど）
+  var strCellRow = Number(cell.slice(1));
+  var totalCoNumber = alphabet.indexOf(strCell[0]);
+  
+  var lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+  var lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
   var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
 }
-  
-  
   return (strCellRow - 1) * totalLastColumnNumber + totalCoNumber;
 }
 
