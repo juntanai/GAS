@@ -403,11 +403,13 @@ function Liblary() {
       this.ceremonyDay = this._getInfo("ceremonyDay"); //挙式日取得変数代入
       this.ceremonyTime = this._getInfo("ceremonyTime"); //挙式時間取得変数代入
       this.partyTime = this._getInfo("partyTime"); //披露宴時間取得
+      this.acceptDay = this._getInfo("acceptDay");//受付日取得
 
       this.ceremonyDayFormat = this._dayFormat(this.ceremonyDay, "yyyy/MM/dd"); //挙式日程を年、月、日の形式にフォーマットする
       this.ceremonyTimeFormat = this._dayFormat(this.ceremonyTime, "HH:mm"); //挙式時間を時、分の形式にフォーマットする
       this.partyTimeFormat = this._dayFormat(this.partyTime, "HH:mm"); //披露宴時間を時、分の形式にフォーマットする
       this.timeNameFormat = this._dayFormat(this.ceremonyDay, "yyyyMMdd"); //ファイル名として使用する形に時間をフォーマットする
+      this.acceptDayFormat = this._dayFormat(this.acceptDay,"yyyy/MM/dd");//受付日を記入する形にフォーマットする
 
       this.staffName = this._getInfo("staffName"); //BP担当者名取得変数代入
 
@@ -513,6 +515,10 @@ function Liblary() {
         きます。\n\n\n${this.profileMailTextOption}\n\n\n株式会社BRAINIG PICTURES\n${this.staffName}`; //PROFILE担当者へ送るメール本文を変数に格納
 
       this.fileName = this.timeNameFormat + this.MenWomenName;
+
+    
+
+      
     }
     //以上必要な値の変数格納終了
 
@@ -806,6 +812,14 @@ function Liblary() {
       }
     }
 
+    writeProfitSheet(){
+      this._serchScheduleSheet(this.ceremonyDay,this.profitSheetUrl,"売上管理表検索");
+      const writeProfitRow = this._getLastRow(this.profitSheetName.当日写真商品,this.profitSheetItemGet.新郎新婦名+"4",SpreadsheetApp.openByUrl(this.scheduleUrl));
+
+      console.log(writeProfitRow);
+    }
+
+
     sendMailToProfile() {
       //--------------------PROFILE担当者へメールを送る関数--------------------------
       const string_check = "https://";
@@ -1007,6 +1021,7 @@ function Liblary() {
       }
       this.scheduleUrl = input_value(sche_sheet, row_get);
       this.setUrlSheetName = input_sheet_name_value(sche_sheet, row_get);
+      
     }
 
     _cellGenerater(timezone = this.checkTime) {
