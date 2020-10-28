@@ -485,7 +485,7 @@ function Liblary() {
       };
 
       this.activeSheetUrl = this._getInfo("activeSheetUrl", this.swArray); //お客様受注書の共有URLを変数に格納
-      this.vtrMailRecipent = "filmj0222@gmail.com"; //VTR担当者のメールアドレスを変数に格納
+      this.vtrMailRecipent = "filmj0222@gmail.com"; //VTR担当者のメールアドレスを変数に格納filmj0222@gmail.com
       this.vtrMailSubject = //VTR担当者へ送るメールの題名を変数に格納
         "V" +
         this.ceremonyDayFormat +
@@ -831,8 +831,8 @@ function Liblary() {
           this.profileMailBody,
           this.MailOptions
         );
-
-        cell_write(this.ItemGetCellArray.checkProfileMail, "OK");
+        
+        this._cellWriteActive(this.ItemGetCellArray.checkProfileMail, "OK",this.sw);
 
         Browser.msgBox(
           "小川さんへのメールが送信されました。Gmailを確認してください"
@@ -855,7 +855,7 @@ function Liblary() {
           this.MailOptions
         );
 
-        cell_write(this.ItemGetCellArray.checkVtrMail, "OK");
+        this._cellWriteActive(this.ItemGetCellArray.checkVtrMail,"OK",this.sw);
 
         Browser.msgBox(
           "陣さんへのメールが送信されました。Gmailを確認してください"
