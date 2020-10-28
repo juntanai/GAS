@@ -5,21 +5,42 @@ function Liblary() {
       //オブジェクト生成時に実行される処理
       //-------------------------------------------基本は変更あってもここ以下のセル等指定部分を触ればOK---------------------------------------
       this.activeSheet = SpreadsheetApp.getActiveSpreadsheet();
-
+//受注書関連シート名
       this.ps = "photo"; //写真商品のシート名に使用する変数を定義
       this.vs = "VTR"; //VTR商品のシート名に使用する変数を定義
       this.sw = "SW"; //SWシート名を変数に格納
       this.cs = "変更履歴"; //変更履歴シート名を変数に格納
+
+      //売上管理表関連シート名
+      this.profitSheetName = {
+        "当日写真商品":"当日写真商品",
+        "当日フォーマル商品":"当日フォーマル商品",
+        "当日VTR商品":"当日VTR商品",
+        "南青山ル・アンジェ当日商品総売上":"南青山ル・アンジェ当日商品総売上",
+        "ル・アンジェ前撮り商品 ":"ル・アンジェ前撮り商品 ",
+        "南青山ル・アンジェ担当売上(前撮り除く)":"南青山ル・アンジェ担当売上(前撮り除く)",
+        "青山店前撮り商品 ":"青山店前撮り商品 ",
+        "テラス前撮り商品 ":"テラス前撮り商品 "
+      }
+
       this.manageSheetUrl =
         "https://docs.google.com/spreadsheets/d/1w7QtLBLsvm1q4ZWGDgrdJDuu0xUTz2CzE_EgkgKIFIY/edit#gid=0"; //施工管理表URL一覧シートのURLを変数に格納
 
       this.bgmSheetUrl =
         "https://docs.google.com/spreadsheets/d/1XRnzgmbMLXXgTldYC9b8kuixTlGPVpnjCHHA4jD_EJQ/edit#gid=1745565909"; //BGM管理表URLを変数に格納
 
+      this.profitSheetUrl = "https://docs.google.com/spreadsheets/d/1oiLscyxbECQ52rtl7MgVWhhDfS1WYYL1gY3Yr6OR4Ss/edit#gid=0"//売上管理表URLまとめシートURLを変数に格納
+
       const totalCell = "A1:L80"; //シートの読み取り範囲全体のセル範囲指定
+      const profitSheetTotalCell = "A1:AZ600"//売上管理表で使用しているセル範囲を指定
+
 
       const cutTotalCell = totalCell.split(""); //全体のセル範囲文字列を１文字ずつ配列格納
       this.lastColumn = cutTotalCell[3]; //セルのcolumの最も使われている範囲のアルファベットのみ抜き出す
+
+      const cutProfitTotalCell = profitSheetTotalCell.split("");
+      this.profitSheetLastColumn = cutProfitTotalCell[3]+cutProfitTotalCell[4];//売上管理表columの最大で使われている範囲のアルファベットのみ抜き出す
+
 
       const psgets = this._setCell(this.ps, totalCell); //photoシート要素全取得
       this.psArray = this._margeArray(psgets); //photoシート要素１時配列化
@@ -168,6 +189,115 @@ function Liblary() {
       this.fmItemCellArray = ["G5", "G8", "G11", "G14", "G17", "G20"]; //施工管理表にフォーマル商品を記載する際のセルを挙式時間ごとに配列にまとめたもの
       this.vtrItemCellArray = ["G7", "G10", "G13", "G16", "G19", "G22"]; //施工管理表にVTR商品を記載する際のセルを挙式時間ごとに配列にまとめたもの
       this.personCellArray = ["J5", "J8", "J11", "J14", "J17", "J20"]; //施工管理表に指名カメラマンを記載する際のセルを挙式時間ごとに配列にまとめたもの
+
+      //売上管理表の項目ごとの列番号配列
+      this.profitSheetItemGet = {
+        "受注日":"B",
+        "施行日":"C",
+        "挙式場":"D",
+        "披露宴会場":"E",
+        "新郎新婦名":"F",
+        "サンプル":"G",
+        "プランナー":"H",
+        "BP担当":"I",
+
+
+        //当日写真シート
+        "初期見積もり商品":"J",
+        "初期見積もり上代":"K",
+        "初期見積もり下代":"L",
+
+        "打ち合わせ時当日撮影商品":"M",
+        "確定時当日撮影商品":"N",
+        "打ち合わせ撮影商品上代":"O",
+        "打ち合わせ撮影商品下代":"P",
+        "確定撮影商品上代":"Q",
+        "確定撮影商品下代":"R",
+        "撮影商品変動率":"S",
+
+        "打ち合わせ時オプション1商品":"T",
+        "確定オプション1商品":"U",
+        "オプション1打ち合わせ上代":"V",
+        "オプション1打ち合わせ下代":"W",
+        "オプション1確定上代":"X",
+        "オプション1確定下代":"Y",
+        
+        "打ち合わせ時オプション2商品":"Z",
+        "確定オプション2商品":"AA",
+        "オプション2打ち合わせ上代":"AB",
+        "オプション2打ち合わせ下代":"AC",
+        "オプション2確定上代":"AD",
+        "オプション2確定下代":"AE",
+        
+        "打ち合わせ時指名商品":"AF",
+        "確定指名商品":"AG",
+        "指名打ち合わせ上代":"AH",
+        "指名打ち合わせ下代":"AI",
+        "指名確定上代":"AJ",
+        "指名確定下代":"AK",
+        
+        "打ち合わせ時オプション総額上代":"AL",
+        "打ち合わせオプション総額下代":"AM",
+        "確定オプション総額上代":"AN",
+        "確定オプション総額下代":"AO",
+        "オプション変動率":"AP",
+
+
+        "写真打ち合わせ総額上代":"AQ",
+        "写真打ち合わせ総額下代":"AR",
+        "写真確定総額上代":"AS",
+        "写真確定総額下代":"AT",
+        "写真総額変動率":"AU",
+        
+
+        //VTRシート
+        "VTR初期見積もり商品":"J",
+        "VTR初期見積もり上代":"K",
+        "VTR初期見積もり下代":"L",
+
+        "VTRエンド打ち合わせ時商品":"M",
+        "VTRエンド確定時商品":"N",
+        "VTRエンド打ち合わせ上代":"O",
+        "VTRエンド打ち合わせ下代":"P",
+        "VTRエンド確定上代":"Q",
+        "VTRエンド確定下代":"R",
+        "VTRエンド変動率":"S",
+
+        "VTR記録打ち合わせ時商品":"T",
+        "VTR記録確定商品":"U",
+        "VTR記録打ち合わせ上代":"V",
+        "VTR記録打ち合わせ下代":"W",
+        "VTR記録確定上代":"X",
+        "VTR記録確定下代":"Y",
+        "VTR記録商品変動率":"Z",
+
+        "VTRセット打ち合わせ時商品":"AA",
+        "VTRセット確定商品":"AB",
+        "VTRセット打ち合わせ上代":"AC",
+        "VTRセット打ち合わせ下代":"AD",
+        "VTRセット確定上代":"AE",
+        "VTRセット確定下代":"AF",
+        "VTRセット変動率":"AG",
+
+        "VTRプロフィール打ち合わせ時商品":"AH",
+        "VTRプロフィール確定時商品":"AI",
+        "VTRプロフィール打ち合わせ上代":"AJ",
+        "VTRプロフィール打ち合わせ下代":"AK",
+        "打ち合わせ時オプション総額上代":"AL",
+        "打ち合わせオプション総額下代":"AM",
+        "確定オプション総額上代":"AN",
+        "確定オプション総額下代":"AO",
+        "オプション変動率":"AP",
+
+
+        "打ち合わせ総額上代":"AQ",
+        "打ち合わせ総額下代":"AR",
+        "確定総額上代":"AS",
+        "確定総額下代":"AT",
+        "総額変動率":"AU",
+        
+      }
+
 
       //以上のセル指定部分を変更すれば簡易的な変更は対応可能（受注書のレイアウト変更など）
 
@@ -593,10 +723,6 @@ function Liblary() {
       }
     }
 
-    profitSheetWrite(){
-
-
-    }
 
 
     _endProcessing() {
@@ -899,7 +1025,7 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
     }
 
     _setCellUrl(url, sheet, range) {
-      //スプレッドシートから読み取るシートとセルを選択する関数
+      //----------------------スプレッドシートから読み取るシートとセルを選択する関数---------------------------
       return SpreadsheetApp.openByUrl(url)
         .getSheetByName(sheet)
         .getRange(range)
@@ -907,14 +1033,14 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
     }
 
     _getRowSerch(url, sn, cell, target) {
-      //配列より検索用語に一致する要素のみ配列に格納する
+      //-------------------------配列より検索用語に一致する要素のみ配列に格納する------------------------
       const namearray = this._setCellUrl(url, sn, cell);
       const rowNumberArray = namearray.filter(target);
       return rowNumberArray;
     }
 
     _serchIndex(array, key) {
-      //配列内のkeyと一致した要素を新しい配列に格納する。
+      //---------------------------配列内のkeyと一致した要素の配列番号を新しい配列に格納する。---------------------
       const indexArray = [];
       array.forEach(function (el, index) {
         if (el === key) {
@@ -924,10 +1050,10 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
       return indexArray;
     }
 
-    _totalValueStaff(url, columnArray, column) {
-      //列番号の配列を利用して利用して同じ行の異なった列のデータを配列に格納する。
+    _totalValueStaff(url,sheet,RowArray,column) {
+      //----------------------------列番号の配列を利用して利用して同じ行の異なった列のデータを配列に格納する。--------------
       const valueArray = [];
-      columnArray.forEach(function (el) {
+      RowArray.forEach(function (el) {
         const cell = column + String(el);
         valueArrray.push(this._setCellUrl(url, sheet, cell));
       });
@@ -939,6 +1065,26 @@ if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&last
         return a + b;
       });
     }
+
+    _profitSheetPersonTotal(profitDay,targetProfitSheetName,personKey,ItemGetRow){//売上管理表の担当者ごとの売上合計を求める関数
+      const profitRange = this.profitSheetItemGet.BP担当 + "4" +":"+this.profitSheetItemGet.BP担当+"800";
+      
+            const profitSheetUrl =this._serchScheduleSheet(profitDay,this.profitSheetUrl,"シート1")//対象の売上管理表を取得
+      
+      
+            const PersonCellArray =this._setCellUrl(profitSheetUrl,targetProfitSheetName,profitRange);//売上管理表の担当者列からデータを取得
+            
+            const photoPersonRowArray=this._serchIndex(PersonCellArray,personKey);//特定の担当者のお客様情報が記載された列番号を配列にする
+            
+      
+            //該当担当者が打ち合わせしたお客様の各価格を配列に格納する
+            const FirstPriceArray = this._totalValueStaff(profitSheetUrl,targetProfitSheetName,photoPersonRowArray,ItemGetRow);
+            
+            //配列に格納したお客様の価格を合計する
+             return this._arrayTotal(FirstPriceArray);
+          }
+      
+
   }
 
   //--------------------以上オブジェクト---------------------------------------------
