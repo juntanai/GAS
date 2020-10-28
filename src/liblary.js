@@ -49,6 +49,7 @@ function Liblary() {
         //写真商品関連
         photoItem: "F17", //挙式当日写真商品記載のセルを設定
         photoItemPrice: "K17", //挙式当日写真商品価格記載のセルを設定
+        photoItemPlan:"L17",//プラン内の有無記載のセルを設定
 
         photoOption1: "F19", //挙式当日写真オプション１記載のセルを設定
         photoOption1Price: "K19", //挙式当日写真オプション１価格記載のセルを設定
@@ -57,45 +58,86 @@ function Liblary() {
         photoOption2Price:"K21",//挙式当日写真オプション2価格記載のセルを設定
 
         photographer: "F25", //指名カメラマン記載のセルを設定
-        photographerPrice:"K25",
+        photographerPrice:"K25",//指名フォトグラファー価格記載のセルを設定
 
         //フォーマル商品関係
-        fmItem: "A17",
-        fmItemColor: "D17",
-        fmPrice: "E17",
+        fmItem: "A17",//フォーマル商品記載のセルを設定
+        fmItemColor: "D17",//フォーマル商品台紙色記載のセルを設定
+        fmPrice: "E17",//フォーマル価格記載のセルを設定
 
-        fmOptionItem1:"A19",
-        fmOptionColor1:"B19",
-        fmOptionPorse1:"C19",
-        fmOptionNumber1:"D19",
-        fmOptionPrice1:"E19",
+        fmOptionItem1:"A19",//フォーマルオプション記載のセルを設定
+        fmOptionColor1:"B19",//フォーマルオプション色記載のセルを設定
+        fmOptionPorse1:"C19",//フォーマルオプションポーズ記載のセルを設定
+        fmOptionNumber1:"D19",//フォーマルオプション冊数記載のセルを設定
+        fmOptionPrice1:"E19",//フォーマルオプション価格記載のセルを設定
 
-        fmOptionItem2:"A21",
-        fmOptionColor2:"B21",
-        fmOptionPorse2:"C21",
-        fmOptionNumber2:"D21",
-        fmOptionPrice2:"E21",
+        fmOptionItem2:"A21",//フォーマルオプション記載のセルを設定
+        fmOptionColor2:"B21",//フォーマルオプション色記載のセルを設定
+        fmOptionPorse2:"C21",//フォーマルオプションポーズ記載のセルを設定
+        fmOptionNumber2:"D21",//フォーマルオプション冊数記載のセルを設定
+        fmOptionPrice2:"E21",//フォーマルオプション価格記載のセルを設定
 
-        fmOptionItem3:"A25",
-        fmOptionColor3:"B25",
-        fmOptionPorse3:"C25",
-        fmOptionNumber3:"D25",
-        fmOptionPrice3:"E25",
+        fmOptionItem3:"A25",//フォーマルオプション記載のセルを設定
+        fmOptionColor3:"B25",//フォーマルオプション色記載のセルを設定
+        fmOptionPorse3:"C25",//フォーマルオプションポーズ記載のセルを設定
+        fmOptionNumber3:"D25",//フォーマルオプション冊数記載のセルを設定
+        fmOptionPrice3:"E25",//フォーマルオプション価格記載のセルを設定
 
+        //前撮り商品関係
+        prephotoItem1:"A28",//前撮り商品記載のセルを設定
+        prephotoItem2:"A30",//前撮り商品記載のセルを設定
+        prephotoItem3:"A34",//前撮り商品記載のセルを設定
+
+        prephotoItem1Price:"E28",//前撮り商品価格記載のセルを設定
+        prephotoItem2Price:"E30",//前撮り商品価格記載のセルを設定
+        prephotoItem3Price:"E34",//前撮り商品価格記載のセルを設定
+
+        prephotoOption1:"A37",//前撮り商品オプション記載のセルを設定
+        prephotoOption2:"A38",//前撮り商品オプション記載のセルを設定
+        prephotoOption3:"A39",//前撮り商品オプション記載のセルを設定
+
+        prephotoOption1Price:"E37",//前撮り商品オプション価格記載のセルを設定
+        prephotoOption2Price:"E38",//前撮り商品オプション価格記載のセルを設定
+        prephotoOption3Price:"E39",//前撮り商品オプション価格記載のセルを設定
 
         //住所関連
-        zipAdd: "A12",
-        Adress1: "A13",
-        Adress2: "E13",
+        zipAdd: "A12",//郵便番号記載セルを設定
+        Adress1: "A13",//住所記載セルを設定
+        Adress2: "E13",//住所記載セルを設定
 
         //VTRシート記載項目-------------------------------------------
 
         //vtr商品関係
-        vtrSetItem: "A3",
-        vtrRecItem: "A8",
-        vtrEndItem: "A11",
-        vtrProfileItem: "A16",
+        vtrSetItem: "A3",//VTRセット商品記載セルを設定
+        vtrSetItemPrice: "D3",//VTRセット商品価格記載のセルを設定
+        vtrSetItemPricePlan: "E3",//VTRセット商品プラン内判定セルを設定
+        vtrSetItemBgm: "A5",//VTRセット商品BGM記載のセルを設定
+        vtrSetItemBgmPrice: "E5",//vtrセット商品BGM価格記載のセルを設定
+        
+        vtrRecItem: "A8",//VTR記録商品記載のセルを設定
+        vtrSetItemPrice: "D8",//VTR記録商品価格記載のセルを設定
+        vtrSetItemPricePlan: "E8",//VTR記録商品プラン内判定セルを設定
+        
+        vtrEndItem: "A11",//VTRエンド商品記載のセルを設定
+        vtrEndItemPrice: "D11",//VTRエンド商品価格記載のセルを設定
+        vtrEndItemPricePlan: "E11",//VTRエンド商品プラン判定記載セルを設定
+        vtrEndItemBgm: "A13",//VTRエンド商品BGM記載セルを設定
+        vtrEndItemBgmPrice: "E13",//VTRエンド商品BGM価格記載セルを設定
 
+        vtrProfileItem:"A16",//VTRプロフィール商品記載セルを設定
+        vtrProfileItemPrice:"D16",//VTRプロフィール商品価格記載セルを設定
+        vtrProfileItemBgm:"A18",//VTRプロフィール商品BGM記載セルを設定
+        vtrProfileItemBgmPrice:"D18",//VTRプロフィール商品BGM価格記載セルを設定
+
+        vtrOption1:"A22",//VTRオプション商品記載のセルを設定
+        vtrOption1Price:"D22",//VTRオプション商品価格記載のセルを設定
+        vtrOption2:"A23",//VTRオプション商品記載のセルを設定
+        vtrOption2Price:"D23",//VTRオプション商品価格記載のセルを設定
+        vtrOption3:"A24",//VTRオプション商品記載のセルを設定
+        vtrOption3Price:"A24",//VTRオプション商品価格記載のセルを設定
+        vtrTelop:"A26",//VTRテロップ記載のセルを設定
+        vtrTelopPrice:"D26",//VTRテロップ価格記載のセルを設定
+        
         //SWシート記載項目--------------------------------------------
 
         //変更関係
@@ -108,14 +150,14 @@ function Liblary() {
         ChangeRecordTextCellSet: "B", //変更の詳細を記載する行を設定
 
         //swシートのチェック項目関係
-        checkVtrMail: "E6",
-        checkProfileMail: "E7",
-        checkSchedule: "E8",
+        checkVtrMail: "E6",//VTRメール可否チェック欄を設定
+        checkProfileMail: "E7",//プロフィールメールチェック欄を設定
+        checkSchedule: "E8",//施工管理表チェック欄を設定
 
         activeSheetUrl: "A22", //共有URLが記載するセルを設定
 
-        vtrMailTextOption: "D26",
-        profileMailTextOption: "D35",
+        vtrMailTextOption: "D26",//VTRにメールを送る際の備考欄を設定
+        profileMailTextOption: "D35",//プロフィールにメールを送る際の備考欄を設定
       };
 
       //施工管理表に記載する際の配列まとめ
@@ -611,18 +653,38 @@ function Liblary() {
       return array[1 + array.indexOf(key)];
     }
 
-    _getArrayNumber(cell) {
+    _getArrayNumber(cell,lastColumn = this.lastColumn) {
       //------------------スプレッドシートすべて取りこんだ配列よりセル番号で情報を引き出すための変換関数
+      
       const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+      const alphabetArray = alphabet.split("");
+      const Numbers = "1234567890";
+      const NumbersArray = Numbers.split("");
       const strCell = cell.split("");
+      const lastColumnArray = lastColumn.split("");
+      
+if(alphabetArray.includes(strCell[0]) && NumbersArray.includes(strCell[1])&&lastColumnArray.length===1){//読み取り指定のセルが英字１数字１から２で構成（例A12,B4など）で、最終列が英字一文字のとき（例Jなど）
+      var strCellRow = Number(cell.slice(1));
+      var totalCoNumber = alphabet.indexOf(strCell[0]);
 
-      const strCellRow = Number(cell.slice(1));
-      const coNumber = alphabet.indexOf(strCell[0]);
-
-      const lastColumnNumber = alphabet.indexOf(this.lastColumn) + 1;
-      return (strCellRow - 1) * lastColumnNumber + coNumber;
-    }
+      var totalLastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+      
+}else if(alphabetArray.includes(strCell[0]) && alphabetArray.includes(strCell[1])&&lastColumnArray.length===2){//読み取り指定のセルが英字２数字１から２で構成（例AA12,AB4など）で、最終列が英字2文字のとき（例ABなど）
+  var strCellRow = Number(cell.slice(2));
+  const coNumber = alphabet.indexOf(strCell[0])+1;
+  const coNumber2 = alphabet.indexOf(strCell[1]);
+  var totalCoNumber = coNumber * 26 + coNumber2;
+  
+  
+  
+  const lastColumnNumber = alphabet.indexOf(lastColumnArray[0]) + 1;
+  const lastColumnNumber2 = alphabet.indexOf(lastColumnArray[1]) + 1;
+  var totalLastColumnNumber = lastColumnNumber * 26 + lastColumnNumber2;
+}
+  
+  
+  return (strCellRow - 1) * totalLastColumnNumber + totalCoNumber;
+}
 
     _getInfo(key1, array = this.psArray) {
       //----------------配列よりスプレッドシートのセル番号から情報を取り出す関数------------------
