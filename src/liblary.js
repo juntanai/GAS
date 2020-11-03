@@ -812,13 +812,18 @@ function Liblary() {
       }
     }
 
-    writeProfitSheet(){
+    writeProfitSheetTokyo(){
       this._serchScheduleSheet(this.ceremonyDay,this.profitSheetUrl,"売上管理表検索");
-      const profitStandardCell = this.profitSheetItemGet.新郎新婦名+"4";
+      const profitStandardCell = this.profitSheetItemGet.新郎新婦名+"1";
       console.log(profitStandardCell);
       const writeProfitRow = this._getLastRow(this.profitSheetName.当日写真商品,profitStandardCell,SpreadsheetApp.openByUrl(this.scheduleUrl));
+      const rowStrChange = String(writeProfitRow);
 
-      console.log(writeProfitRow);
+      this._cellWrite(this.profitSheetItemGet.受注日+rowStrChange,this.acceptDay,this.scheduleUrl,this.profitSheetName.当日写真商品);
+      this._cellWrite(this.profitSheetItemGet.施行日+rowStrChange,this.ceremonyDayFormat,this.scheduleUrl,this.profitSheetName.当日写真商品);
+      this._cellWrite(this.profitSheetItemGet.挙式場+rowStrChange,this.acceptDay,this.scheduleUrl,this.profitSheetName.当日写真商品);
+      this._cellWrite(this.profitSheetItemGet.受注日+rowStrChange,this.acceptDay,this.scheduleUrl,this.profitSheetName.当日写真商品);
+      
     }
 
 
