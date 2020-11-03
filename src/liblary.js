@@ -16,12 +16,12 @@ function Liblary() {
         当日写真商品: "当日写真商品",
         当日フォーマル商品: "当日フォーマル商品",
         当日VTR商品: "当日VTR商品",
-        "南青山ル・アンジェ当日商品総売上": "南青山ル・アンジェ当日商品総売上",
-        "ル・アンジェ前撮り商品 ": "ル・アンジェ前撮り商品 ",
-        "南青山ル・アンジェ担当売上(前撮り除く)":
+        南青山ルアンジェ当日商品総売上: "南青山ル・アンジェ当日商品総売上",
+        ルアンジェ前撮り商品: "ル・アンジェ前撮り商品 ",
+        南青山ルアンジェ担当売上前撮り除く:
           "南青山ル・アンジェ担当売上(前撮り除く)",
-        "青山店前撮り商品 ": "青山店前撮り商品 ",
-        "テラス前撮り商品 ": "テラス前撮り商品 ",
+        青山店前撮り商品: "青山店前撮り商品 ",
+        テラス前撮り商品: "テラス前撮り商品 ",
       };
 
       this.manageSheetUrl =
@@ -67,6 +67,12 @@ function Liblary() {
         menName: "B8", //新郎の名前記載のセルを設定
         womenName: "G8", //新婦の名前記載のセルを設定
         partyRoomName: "G5", //披露宴会場名記載のセルを設定
+        plannerName: "K5", //担当プランナー名記載のセルを設定
+
+        //サンプル関連
+        sampleCheck: "K14",
+        //確定関連
+        confirmCheck:"L3",
 
         //写真商品関連
         photoItem: "F17", //挙式当日写真商品記載のセルを設定
@@ -180,6 +186,9 @@ function Liblary() {
 
         vtrMailTextOption: "D26", //VTRにメールを送る際の備考欄を設定
         profileMailTextOption: "D35", //プロフィールにメールを送る際の備考欄を設定
+
+        firstPhotoItem: "A78",
+        firstVtrItem: "B78",
       };
 
       //施工管理表に記載する際の配列まとめ
@@ -398,20 +407,25 @@ function Liblary() {
 
       //以上のセル指定部分を変更すれば簡易的な変更は対応可能（受注書のレイアウト変更など）
 
+      this.aoyamaChapel = "南青山ル・アンジェ教会";
+
       //---------------------------------------各種処理を実行する際に必要な値を変数に格納------------------------------------
 
       this.ceremonyDay = this._getInfo("ceremonyDay"); //挙式日取得変数代入
       this.ceremonyTime = this._getInfo("ceremonyTime"); //挙式時間取得変数代入
       this.partyTime = this._getInfo("partyTime"); //披露宴時間取得
-      this.acceptDay = this._getInfo("acceptDay");//受付日取得
+      this.acceptDay = this._getInfo("acceptDay"); //受付日取得
+
+      this.confirmCheck = this._getInfo("confirmCheck");//確定判定用
 
       this.ceremonyDayFormat = this._dayFormat(this.ceremonyDay, "yyyy/MM/dd"); //挙式日程を年、月、日の形式にフォーマットする
       this.ceremonyTimeFormat = this._dayFormat(this.ceremonyTime, "HH:mm"); //挙式時間を時、分の形式にフォーマットする
       this.partyTimeFormat = this._dayFormat(this.partyTime, "HH:mm"); //披露宴時間を時、分の形式にフォーマットする
       this.timeNameFormat = this._dayFormat(this.ceremonyDay, "yyyyMMdd"); //ファイル名として使用する形に時間をフォーマットする
-      this.acceptDayFormat = this._dayFormat(this.acceptDay,"yyyy/MM/dd");//受付日を記入する形にフォーマットする
+      this.acceptDayFormat = this._dayFormat(this.acceptDay, "yyyy/MM/dd"); //受付日を記入する形にフォーマットする
 
       this.staffName = this._getInfo("staffName"); //BP担当者名取得変数代入
+      this.plannerName = this._getInfo("plannerName"); //プランナー担当者取得変数代入
 
       this.menName = this._getInfo("menName"); //新郎名前取得変数代入
       this.womenName = this._getInfo("womenName"); //新婦名前取得変数代入
@@ -420,6 +434,8 @@ function Liblary() {
       this.partyRoomName = this._getInfo("partyRoomName"); //披露宴会場名取得変数代入
 
       this.zipAdd = this._getInfo("zipAdd"); //お客様住所郵便番号取得変数代入
+
+      this.sampleCheck = this._getInfo("sampleCheck"); //サンプルOKかどうかを判定する
 
       this.photoItem = this._getInfo("photoItem"); //写真商品取得変数代入
       this.photoItemPrice = this._getInfo("photoItemPrice");
@@ -454,9 +470,6 @@ function Liblary() {
       this.fmOptionPorse3 = this._getInfo("fmOptionPorse3");
       this.fmOptionNumber3 = this._getInfo("fmOptionNumber3");
       this.fmOptionPrice3 = this._getInfo("fmOptionPrice3");
-
-
-
 
       this.vtrSetItem = this._getInfo("vtrSetItem", this.vsArray); //VTRのセットアイテムを取得変数代入
       this.vtrRecItem = this._getInfo("vtrRecItem", this.vsArray); //記録映像を取得変数代入
@@ -516,9 +529,8 @@ function Liblary() {
 
       this.fileName = this.timeNameFormat + this.MenWomenName;
 
-    
-
-      
+      this.firstPhotoItem = this._getInfo("firstPhotoItem", this.swArray);
+      this.firstVtrItem = this._getInfo("firstVtrItem", this.swArray);
     }
     //以上必要な値の変数格納終了
 
@@ -812,20 +824,115 @@ function Liblary() {
       }
     }
 
-    writeProfitSheetTokyo(){
-      this._serchScheduleSheet(this.ceremonyDay,this.profitSheetUrl,"売上管理表検索");
-      const profitStandardCell = this.profitSheetItemGet.新郎新婦名+"1";
-      console.log(profitStandardCell);
-      const writeProfitRow = this._getLastRow(this.profitSheetName.当日写真商品,profitStandardCell,SpreadsheetApp.openByUrl(this.scheduleUrl));
+    writeProfitSheetTokyo() {
+      this._serchScheduleSheet(
+        this.ceremonyDay,
+        this.profitSheetUrl,
+        "売上管理表検索"
+      );
+      const profitStandardCell = this.profitSheetItemGet.新郎新婦名 + "1";
+
+      const writeProfitRow = this._getLastRow(
+        this.profitSheetName.当日写真商品,
+        profitStandardCell,
+        SpreadsheetApp.openByUrl(this.scheduleUrl)
+      );
       const rowStrChange = String(writeProfitRow);
 
-      this._cellWrite(this.profitSheetItemGet.受注日+rowStrChange,this.acceptDay,this.scheduleUrl,this.profitSheetName.当日写真商品);
-      this._cellWrite(this.profitSheetItemGet.施行日+rowStrChange,this.ceremonyDayFormat,this.scheduleUrl,this.profitSheetName.当日写真商品);
-      this._cellWrite(this.profitSheetItemGet.挙式場+rowStrChange,this.acceptDay,this.scheduleUrl,this.profitSheetName.当日写真商品);
-      this._cellWrite(this.profitSheetItemGet.受注日+rowStrChange,this.acceptDay,this.scheduleUrl,this.profitSheetName.当日写真商品);
-      
-    }
+      if(this.confirmCheck === "" || !this.confirmCheck){
+      this._cellWrite(
+        this.profitSheetItemGet.受注日 + rowStrChange,
+        this.acceptDay,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.施行日 + rowStrChange,
+        this.ceremonyDayFormat,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.挙式場 + rowStrChange,
+        this.aoyamaChapel,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.披露宴会場 + rowStrChange,
+        this.partyRoomName,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.新郎新婦名 + rowStrChange,
+        this.MenWomenName,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.サンプル + rowStrChange,
+        this.sampleCheck,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.プランナー + rowStrChange,
+        this.plannerName,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.BP担当 + rowStrChange,
+        this.staffName,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
+        this.firstPhotoItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.打ち合わせ時オプション1商品 + rowStrChange,
+        this.photoOption1,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.打ち合わせ時オプション2商品 + rowStrChange,
+        this.photoOption2,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
+        this.firstPhotoItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
+        this.firstPhotoItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
+        this.firstPhotoItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
 
+      }else if(this.confirmCheck != ""){
+
+      }else{
+        msgBox("処理を中止します");
+        return
+      }
+
+    }
 
     sendMailToProfile() {
       //--------------------PROFILE担当者へメールを送る関数--------------------------
@@ -838,8 +945,12 @@ function Liblary() {
           this.profileMailBody,
           this.MailOptions
         );
-        
-        this._cellWriteActive(this.ItemGetCellArray.checkProfileMail, "OK",this.sw);
+
+        this._cellWriteActive(
+          this.ItemGetCellArray.checkProfileMail,
+          "OK",
+          this.sw
+        );
 
         Browser.msgBox(
           "小川さんへのメールが送信されました。Gmailを確認してください"
@@ -862,7 +973,11 @@ function Liblary() {
           this.MailOptions
         );
 
-        this._cellWriteActive(this.ItemGetCellArray.checkVtrMail,"OK",this.sw);
+        this._cellWriteActive(
+          this.ItemGetCellArray.checkVtrMail,
+          "OK",
+          this.sw
+        );
 
         Browser.msgBox(
           "陣さんへのメールが送信されました。Gmailを確認してください"
@@ -1028,7 +1143,6 @@ function Liblary() {
       }
       this.scheduleUrl = input_value(sche_sheet, row_get);
       this.setUrlSheetName = input_sheet_name_value(sche_sheet, row_get);
-      
     }
 
     _cellGenerater(timezone = this.checkTime) {
