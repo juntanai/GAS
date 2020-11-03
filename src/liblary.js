@@ -188,7 +188,10 @@ function Liblary() {
         profileMailTextOption: "D35", //プロフィールにメールを送る際の備考欄を設定
 
         firstPhotoItem: "A78",
-        firstVtrItem: "B78",
+        firstEndVtrItem: "B78",
+        firstRecVtrItem:"B80",
+        firstFmItem:"A80",
+        firstSetVtrItem:"B82"
       };
 
       //施工管理表に記載する際の配列まとめ
@@ -530,7 +533,9 @@ function Liblary() {
       this.fileName = this.timeNameFormat + this.MenWomenName;
 
       this.firstPhotoItem = this._getInfo("firstPhotoItem", this.swArray);
-      this.firstVtrItem = this._getInfo("firstVtrItem", this.swArray);
+      this.firstEndVtrItem = this._getInfo("firstEndVtrItem", this.swArray);
+      this.firstFmItem = this._getInfo("firstFmItem",this.swArray);
+
     }
     //以上必要な値の変数格納終了
 
@@ -907,23 +912,25 @@ function Liblary() {
         this.profitSheetName.当日写真商品
       );
       this._cellWrite(
-        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
-        this.firstPhotoItem,
+        this.profitSheetItemGet.打ち合わせ時指名商品 + rowStrChange,
+        this.photographer,
         this.scheduleUrl,
         this.profitSheetName.当日写真商品
       );
       this._cellWrite(
-        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
-        this.firstPhotoItem,
+        this.profitSheetItemGet.FM初期見積もり商品 + rowStrChange,
+        this.firstFmItem,
         this.scheduleUrl,
-        this.profitSheetName.当日写真商品
+        this.profitSheetName.当日フォーマル商品
       );
       this._cellWrite(
-        this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
-        this.firstPhotoItem,
+        this.profitSheetItemGet.FM初期見積もり商品 + rowStrChange,
+        this.fmItem,
         this.scheduleUrl,
-        this.profitSheetName.当日写真商品
+        this.profitSheetName.当日フォーマル商品
       );
+      
+      
 
       }else if(this.confirmCheck != ""){
 
