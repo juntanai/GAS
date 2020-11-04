@@ -33,7 +33,7 @@ function Liblary() {
       this.profitSheetUrl =
         "https://docs.google.com/spreadsheets/d/1oiLscyxbECQ52rtl7MgVWhhDfS1WYYL1gY3Yr6OR4Ss/edit#gid=0"; //売上管理表URLまとめシートURLを変数に格納
 
-      const totalCell = "A1:L80"; //シートの読み取り範囲全体のセル範囲指定
+      const totalCell = "A1:L90"; //シートの読み取り範囲全体のセル範囲指定
       const profitSheetTotalCell = "A1:AZ600"; //売上管理表で使用しているセル範囲を指定
 
       const cutTotalCell = totalCell.split(""); //全体のセル範囲文字列を１文字ずつ配列格納
@@ -187,11 +187,20 @@ function Liblary() {
         vtrMailTextOption: "D26", //VTRにメールを送る際の備考欄を設定
         profileMailTextOption: "D35", //プロフィールにメールを送る際の備考欄を設定
 
-        firstPhotoItem: "A78",
-        firstEndVtrItem: "B78",
-        firstRecVtrItem:"B80",
-        firstFmItem:"A80",
-        firstSetVtrItem:"B82"
+        firstPhotoItem: "A78",//初期見積もり写真商品記入セルを設定
+        firstPhotoItemPrice: "B78",//初期見積もり写真商品価格記入セルを設定
+        
+        firstFmItem:"A80",//初期見積もりfm商品記入セルを設定
+        firstFmItemPrice:"B80",//初期見積もりfm商品価格を設定
+
+        firstEndVtrItem: "A82",//初期見積もりエンドロール記入セルを設定
+        firstEndVtrItemPrice: "B82",//初期見積もりエンドロール価格セルを設定
+        
+        firstRecVtrItem:"A84",//初期見積もり記録商品記入セルを設定
+        firstRecVtrItemPrice:"B84",//初期見積もり記録商品価格記入セルを設定
+
+        firstSetVtrItem:"A86",//初期見積もりセットVTR商品記入セルを設定
+        firstSetVtrItem:"B86"//初期見積もりセットVTR価格記入セルを設定
       };
 
       //施工管理表に記載する際の配列まとめ
@@ -533,11 +542,19 @@ function Liblary() {
       this.fileName = this.timeNameFormat + this.MenWomenName;
 
       this.firstPhotoItem = this._getInfo("firstPhotoItem", this.swArray);
-      this.firstEndVtrItem = this._getInfo("firstEndVtrItem", this.swArray);
-      this.firstFmItem = this._getInfo("firstFmItem",this.swArray);
+      this.firstPhotoItem = this._getInfo("firstPhotoItemPrice", this.swArray);
 
+      this.firstFmItem = this._getInfo("firstFmItem",this.swArray);
+      this.firstFmItem = this._getInfo("firstFmItemPrice",this.swArray);
+
+      this.firstEndVtrItem = this._getInfo("firstEndVtrItem", this.swArray);
+      this.firstEndVtrItemPrice = this._getInfo("firstEndVtrItemPrice", this.swArray);
+      this.firstRecVtrItem = this._getInfo("firstRecVtrItem",this.swArray);
+      this.firstRecVtrItemPrice = this._getInfo("firstRecVtrItemPrice",this.swArray);
+      this.firstSetVtrItem = this._getInfo("firstSetVtrItem",this.swArray);
+      this.firstSetVtrItemPrice = this._getInfo("firstSetVtrItemPrice",this.swArray);
     }
-    //以上必要な値の変数格納終了
+    //--------------------------------------------以上必要な値の変数格納終了-----------------------------
 
     start() {
       //記入開始時に必ず使用する関数
@@ -829,7 +846,7 @@ function Liblary() {
       }
     }
 
-    writeProfitSheetTokyo() {
+    writeMinamiAoyamaProfitSheet() {//南青山ル・アンジェ教会の売上管理表記載関数
       this._serchScheduleSheet(
         this.ceremonyDay,
         this.profitSheetUrl,
@@ -844,7 +861,21 @@ function Liblary() {
       );
       const rowStrChange = String(writeProfitRow);
 
+      
+
       if(this.confirmCheck === "" || !this.confirmCheck){
+
+        const firstVtrItem =  this._vtrItemCheck(this.firstSetVtrItem,this.firstRecVtrItem,this.firstEndVtrItem);
+
+         if(firstVtrItem===this.firstSetVtrItem){
+          var firstVtrItemPrice = this.firstSetVtrItemPrice
+        }else if(firstVtrItem === this.firstRecVtrItem){
+          var firstVtrItemPrice = this.firstRecVtrItemPrice
+        }else{
+          var firstVtrItemPrice = this.firstEndVtrItemPrice
+        }
+
+
       this._cellWrite(
         this.profitSheetItemGet.受注日 + rowStrChange,
         this.acceptDay,
@@ -924,13 +955,59 @@ function Liblary() {
         this.profitSheetName.当日フォーマル商品
       );
       this._cellWrite(
-        this.profitSheetItemGet.FM初期見積もり商品 + rowStrChange,
+        this.profitSheetItemGet.FM打ち合わせ時当日撮影商品 + rowStrChange,
         this.fmItem,
         this.scheduleUrl,
         this.profitSheetName.当日フォーマル商品
       );
-      
-      
+      this._cellWrite(
+        this.profitSheetItemGet.FM打ち合わせ時オプション1商品 + rowStrChange,
+        this.fmOptionItem1+this.fmOptionColor1+this.fmOptionPorse1+this.fmOptionNumber1,
+        this.scheduleUrl,
+        this.profitSheetName.当日フォーマル商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.FMオプション1打ち合わせ上代 + rowStrChange,
+        this.fmOptionPrice1,
+        this.scheduleUrl,
+        this.profitSheetName.当日フォーマル商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.FM打ち合わせ時オプション2商品 + rowStrChange,
+        this.fmOptionItem2+this.fmOptionColor2+this.fmOptionPorse2+this.fmOptionNumber2,
+        this.scheduleUrl,
+        this.profitSheetName.当日フォーマル商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.FMオプション2打ち合わせ上代 + rowStrChange,
+        this.fmOptionPrice2,
+        this.scheduleUrl,
+        this.profitSheetName.当日フォーマル商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.FM打ち合わせ時オプション3商品 + rowStrChange,
+        this.fmOptionItem3+this.fmOptionColor3+this.fmOptionPorse3+this.fmOptionNumber3,
+        this.scheduleUrl,
+        this.profitSheetName.当日フォーマル商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.FMオプション3打ち合わせ上代 + rowStrChange,
+        this.fmOptionPrice3,
+        this.scheduleUrl,
+        this.profitSheetName.当日フォーマル商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTR初期見積もり商品 + rowStrChange,
+        firstVtrItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTR初期見積もり上代 + rowStrChange,
+        firstVtrItemPrice,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
 
       }else if(this.confirmCheck != ""){
 
@@ -1391,6 +1468,20 @@ function Liblary() {
       //配列に格納したお客様の価格を合計する
       return this._arrayTotal(FirstPriceArray);
     }
+
+    // _findRow(url,sheetname,val,col){
+
+    //   var dat = sheet.getDataRange().getValues(); //受け取ったシートのデータを二次元配列に取得
+    
+    //   for(var i=1;i<dat.length;i++){
+    //     if(dat[i][col-1] === val){
+    //       return i+1;
+    //     }
+    //   }
+    //   return 0;
+    // }
+
+
   }
 
   //--------------------以上オブジェクト---------------------------------------------
