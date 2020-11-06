@@ -487,8 +487,10 @@ function Liblary() {
       this.vtrRecItem = this._getInfo("vtrRecItem", this.vsArray); //記録映像を取得変数代入
       this.vtrEndItem = this._getInfo("vtrEndItem", this.vsArray); //エンドロールを取得変数代入
       this.vtrProfileItem = this._getInfo("vtrProfileItem", this.vsArray); //プロフィールを取得変数代入
-
-      this.vtrItem = this._vtrItemCheck(); //施工管理表に記載するVTR商品のフィルタリング
+      this.vtrOption1 = this._getInfo("vtrOption1", this.vsArray);
+      this.vtrOption2 = this._getInfo("vtrOption2", this.vsArray);
+      this.vtrTelop = this._getInfo("vtrTelop", this.vsArray);
+      
 
       this.changeDay = this._getInfo("changeDay", this.swArray); //挙式変更日を変数に格納
       this.changeCeremonyTime = this._getInfo(
@@ -580,6 +582,7 @@ function Liblary() {
 
     writeAnotherSheet(change = this.change) {
       //--------------------------------施工管理表に記載するための関数----------------------------------------
+      this.vtrItem = this._vtrItemCheck(); //施工管理表に記載するVTR商品のフィルタリング
       this.CeremonyPartyTime =
         this.ceremonyTimeFormat + " " + "(" + this.partyTimeFormat + ")"; //施工管理表シートに記載する形式に時間をフォーマットする
 
@@ -931,6 +934,12 @@ function Liblary() {
         this.profitSheetName.当日写真商品
       );
       this._cellWrite(
+        this.profitSheetItemGet.打ち合わせ時当日撮影商品 + rowStrChange,
+        this.photoItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日写真商品
+      );
+      this._cellWrite(
         this.profitSheetItemGet.打ち合わせ時オプション1商品 + rowStrChange,
         this.photoOption1,
         this.scheduleUrl,
@@ -1008,11 +1017,130 @@ function Liblary() {
         this.scheduleUrl,
         this.profitSheetName.当日VTR商品
       );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRエンド打ち合わせ時商品 + rowStrChange,
+        this.vtrEndItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTR記録打ち合わせ時商品 + rowStrChange,
+        this.vtrRecItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRセット打ち合わせ時商品 + rowStrChange,
+        this.vtrSetItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRプロフィール打ち合わせ時商品 + rowStrChange,
+        this.vtrProfileItem,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+    
 
       }else if(this.confirmCheck != ""){
 
+        const findRow = String(this._findRow());
+
+
+        this._cellWrite(
+          this.profitSheetItemGet.確定時当日撮影商品 + findRow,
+          this.photoItem,
+          this.scheduleUrl,
+          this.profitSheetName.当日写真商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.確定オプション1商品 + findRow,
+          this.photoOption1,
+          this.scheduleUrl,
+          this.profitSheetName.当日写真商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.確定オプション2商品 + findRow,
+          this.photoOption2,
+          this.scheduleUrl,
+          this.profitSheetName.当日写真商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.確定指名商品 + findRow,
+          this.photographer,
+          this.scheduleUrl,
+          this.profitSheetName.当日写真商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FM確定時当日撮影商品 + findRow,
+          this.fmItem,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FM確定オプション1商品 + findRow,
+          this.fmOptionItem1+this.fmOptionColor1+this.fmOptionPorse1+this.fmOptionNumber1,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FMオプション1確定上代 + findRow,
+          this.fmOptionPrice1,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FM確定オプション2商品 + findRow,
+          this.fmOptionItem2+this.fmOptionColor2+this.fmOptionPorse2+this.fmOptionNumber2,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FMオプション2確定上代 + findRow,
+          this.fmOptionPrice2,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FM確定オプション3商品 + findRow,
+          this.fmOptionItem3+this.fmOptionColor3+this.fmOptionPorse3+this.fmOptionNumber3,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.FMオプション3確定上代 + findRow,
+          this.fmOptionPrice3,
+          this.scheduleUrl,
+          this.profitSheetName.当日フォーマル商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTRエンド確定時商品 + findRow,
+          this.vtrEndItem,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTR記録確定商品 + findRow,
+          this.vtrRecItem,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTRセット確定商品 + findRow,
+          this.vtrSetItem,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTRプロフィール確定時商品 + findRow,
+          this.vtrProfileItem,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+
       }else{
-        msgBox("処理を中止します");
+        msgBox("エラーのため処理を中止します");
         return
       }
 
@@ -1469,17 +1597,17 @@ function Liblary() {
       return this._arrayTotal(FirstPriceArray);
     }
 
-    // _findRow(url,sheetname,val,col){
+    _findRow(url,sheet,range,val,col){
 
-    //   var dat = sheet.getDataRange().getValues(); //受け取ったシートのデータを二次元配列に取得
+      var dat = SpreadsheetApp.openByUrl(url).getSheetByName(sheet).getDataRange(range).getValues(); //受け取ったシートのデータを二次元配列に取得
     
-    //   for(var i=1;i<dat.length;i++){
-    //     if(dat[i][col-1] === val){
-    //       return i+1;
-    //     }
-    //   }
-    //   return 0;
-    // }
+      for(var i=1;i<dat.length;i++){
+        if(dat[i][col-1] === val){
+          return i+1;
+        }
+      }
+      return 0;
+    }
 
 
   }
