@@ -200,7 +200,7 @@ function Liblary() {
         firstRecVtrItemPrice:"B84",//初期見積もり記録商品価格記入セルを設定
 
         firstSetVtrItem:"A86",//初期見積もりセットVTR商品記入セルを設定
-        firstSetVtrItem:"B86"//初期見積もりセットVTR価格記入セルを設定
+        firstSetVtrItemPrice:"B86"//初期見積もりセットVTR価格記入セルを設定
       };
 
       //施工管理表に記載する際の配列まとめ
