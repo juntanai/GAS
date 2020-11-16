@@ -577,7 +577,7 @@ function Liblary() {
       
       this.prephotoOption1 = this._getInfo("prephotoOption1");
       this.prephotoOption2 = this._getInfo("prephotoOption2");
-      this.prephotoOption3 = this._getInfo("prephotoPhotographer");
+      this.prephotoPhotographer = this._getInfo("prephotoPhotographer");
       
       this.prephotoOption1Price = this._getInfo("prephotoOption1Price");
       this.prephotoOption2Price = this._getInfo("prephotoOption2Price");
@@ -1241,7 +1241,7 @@ function Liblary() {
       );
       this._cellWrite(
         this.profitSheetItemGet.前撮りオプション3打ち合わせ商品 + rowStrChange,
-        this.prephotoOption3,
+        this.prephotoPhotographer,
         this.scheduleUrl,
         this.profitSheetName.ルアンジェ前撮り商品
       );
@@ -1434,7 +1434,7 @@ function Liblary() {
         );
         this._cellWrite(
           this.profitSheetItemGet.前撮りオプション3確定商品 + rowStrChange,
-          this.prephotoOption3,
+          this.prephotoPhotographer,
           this.scheduleUrl,
           this.profitSheetName.ルアンジェ前撮り商品
         );
