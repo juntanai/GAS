@@ -1,4 +1,4 @@
 function ProfileMAIL2(){
-    const methods = Libraly();
+    const methods = Liblary();
     methods.sendMailToProfile();
 }

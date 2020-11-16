@@ -1,4 +1,4 @@
 function VTRMAIL2(){
-    const methods = Libraly();
+    const methods = Liblary();
     methods.sendMailToVtr();
 }

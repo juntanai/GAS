@@ -33,8 +33,26 @@ function Liblary() {
       this.profitSheetUrl =
         "https://docs.google.com/spreadsheets/d/1oiLscyxbECQ52rtl7MgVWhhDfS1WYYL1gY3Yr6OR4Ss/edit#gid=0"; //売上管理表URLまとめシートURLを変数に格納
 
+        this.priceSheetUrl = "https://docs.google.com/spreadsheets/d/1-YdGbSq4_E-aOHXVjBYAComJCz7DIZs9Uj5pWD3SZPo/edit#gid=881085111";//価格等取得シートURLを変数に格納
+
       const totalCell = "A1:L90"; //シートの読み取り範囲全体のセル範囲指定
       const profitSheetTotalCell = "A1:AZ600"; //売上管理表で使用しているセル範囲を指定
+      this.profitSerchCells = "F4:F1000";//売上管理表にてお客様名を検索する際の範囲
+
+      this.sheduleStandard = 10;//施工管理表に色を付ける際に基準となる列番号
+
+      this.photoItemCharchArray = SpreadsheetApp.openByUrl(this.priceSheetUrl).getRange("X1").getValues();//礼拝堂のみ撮影商品を判定するための商品名配列
+
+      this.photoItemCeremonyArray = SpreadsheetApp.openByUrl(this.priceSheetUrl).getRange("AB1:AB8").getValues();
+
+      this.photoItemCeremonyPartyArray = SpreadsheetApp.openByUrl(this.priceSheetUrl).getRange("AF1:AF7").getValues();
+
+      this.photoItemParty1hArray = SpreadsheetApp.openByUrl(this.priceSheetUrl).getRange("AJ1:AJ7").getValues();
+
+      this.photoItemPartyArray = SpreadsheetApp.openByUrl(this.priceSheetUrl).getRange("AN1:AN6").getValues();
+
+      this.photoItem2personArray = SpreadsheetApp.openByUrl(this.priceSheetUrl).getRange("AR1:AR6").getValues();
+
 
       const cutTotalCell = totalCell.split(""); //全体のセル範囲文字列を１文字ずつ配列格納
       this.lastColumn = cutTotalCell[3]; //セルのcolumの最も使われている範囲のアルファベットのみ抜き出す
@@ -85,7 +103,7 @@ function Liblary() {
         photoOption2: "F21", //挙式当日写真オプション２記載のセルを設定
         photoOption2Price: "K21", //挙式当日写真オプション2価格記載のセルを設定
 
-        photographer: "F25", //指名カメラマン記載のセルを設定
+        photographer: "G25", //指名カメラマン記載のセルを設定
         photographerPrice: "K25", //指名フォトグラファー価格記載のセルを設定
 
         //フォーマル商品関係
@@ -116,17 +134,21 @@ function Liblary() {
         prephotoItem2: "A30", //前撮り商品記載のセルを設定
         prephotoItem3: "A34", //前撮り商品記載のセルを設定
 
+        prephotoItem1Day:"D28",//前撮り商品撮影日程1
+        prephotoItem2Day:"D30",//前撮り商品撮影日程2
+        prephotoItem3Day:"D34",//前撮り商品撮影日程3
+
         prephotoItem1Price: "E28", //前撮り商品価格記載のセルを設定
         prephotoItem2Price: "E30", //前撮り商品価格記載のセルを設定
         prephotoItem3Price: "E34", //前撮り商品価格記載のセルを設定
 
         prephotoOption1: "A37", //前撮り商品オプション記載のセルを設定
         prephotoOption2: "A38", //前撮り商品オプション記載のセルを設定
-        prephotoOption3: "A39", //前撮り商品オプション記載のセルを設定
+        prephotoPhotographer: "B39", //前撮り商品オプション記載のセルを設定
 
         prephotoOption1Price: "E37", //前撮り商品オプション価格記載のセルを設定
         prephotoOption2Price: "E38", //前撮り商品オプション価格記載のセルを設定
-        prephotoOption3Price: "E39", //前撮り商品オプション価格記載のセルを設定
+        prephotoPhotographerPrice: "E39", //前撮り商品オプション価格記載のセルを設定
 
         //住所関連
         zipAdd: "A12", //郵便番号記載セルを設定
@@ -211,6 +233,10 @@ function Liblary() {
       this.fmItemCellArray = ["G5", "G8", "G11", "G14", "G17", "G20"]; //施工管理表にフォーマル商品を記載する際のセルを挙式時間ごとに配列にまとめたもの
       this.vtrItemCellArray = ["G7", "G10", "G13", "G16", "G19", "G22"]; //施工管理表にVTR商品を記載する際のセルを挙式時間ごとに配列にまとめたもの
       this.personCellArray = ["J5", "J8", "J11", "J14", "J17", "J20"]; //施工管理表に指名カメラマンを記載する際のセルを挙式時間ごとに配列にまとめたもの
+      this.schedulePhotoColorCellArray = ["5", "8", "11", "14", "17", "20"]; //施工管理表に写真スケジュールを記載する際のセルを挙式時間ごとに配列にまとめたもの
+      this.scheduleVtrColorCellArray = ["7", "10", "13", "16", "19", "22"]; //施工管理表にVTRスケジュールを記載する際のセルを挙式時間ごとに配列にまとめたもの
+
+
 
       //売上管理表の項目ごとの列番号配列
       this.profitSheetItemGet = {
@@ -353,61 +379,109 @@ function Liblary() {
         VTRプロフィールプロフィール確定下代: "AM",
         VTRプロフィール変動率: "AN",
 
-        VTR打ち合わせ総額上代: "AO",
-        VTR打ち合わせ総額下代: "AP",
-        VTR確定総額上代: "AQ",
-        VTR確定総額下代: "AR",
-        VTR変動率: "AS",
+        VTRオプション1打ち合わせ時商品:"AO",
+        VTRオプション1確定時商品:"AP",
+        VTRオプション1打ち合わせ上代:"AQ",
+        VTRオプション1打ち合わせ下代:"AR",
+        VTRオプション1確定上代:"AS",
+        VTRオプション1確定下代:"AT",
+
+        VTRオプション2打ち合わせ時商品:"AU",
+        VTRオプション2確定時商品:"AV",
+        VTRオプション2打ち合わせ上代:"AW",
+        VTRオプション2打ち合わせ下代:"AX",
+        VTRオプション2確定上代:"AY",
+        VTRオプション2確定下代:"AZ",
+
+        VTRオプション3打ち合わせ時商品:"BA",
+        VTRオプション3確定時商品:"BB",
+        VTRオプション3打ち合わせ上代:"BC",
+        VTRオプション3打ち合わせ下代:"BD",
+        VTRオプション3確定上代:"BE",
+        VTRオプション3確定下代:"BF",
+
+        VTRオプション総額打ち合わせ上代:"BG",
+        VTRオプション総額打ち合わせ下代:"BH",
+        VTRオプション総額確定上代:"BI",
+        VTRオプション総額確定下代:"BJ",
+
+        VTRISUMエンドロール商品:"BK",
+        VTRISUMプロフィール商品:"BL",
+        VTRISUM確定下代:"BM",
+
+
+        VTR打ち合わせ総額上代: "BN",
+        VTR打ち合わせ総額下代: "BO",
+        VTR確定総額上代: "BP",
+        VTR確定総額下代: "BQ",
+        VTR変動率: "BR",
 
         //前撮り共通項目
         前撮りお客様挙式日: "B",
-        前撮り撮影日: "C",
-        前撮り撮影場所: "D",
-        前撮り新郎新婦名: "E",
-        前撮りサンプル: "F",
-        前撮りプランナー: "G",
-        前撮りBP担当: "H",
+        前撮り新郎新婦名: "C",
+        前撮りサンプル: "D",
+        前撮りプランナー: "E",
+        前撮りBP担当: "F",
 
-        前撮り打ち合わせ商品: "I",
-        前撮り確定商品: "J",
-        前撮り打ち合わせ上代: "K",
-        前撮り打ち合わせ下代: "L",
-        前撮り確定上代: "M",
-        前撮り確定下代: "N",
-        前撮り変動率: "O",
+        前撮り打ち合わせ商品: "G",
+        前撮り確定商品: "H",
+        前撮り撮影日:"I",
+        前撮り打ち合わせ上代: "J",
+        前撮り打ち合わせ下代: "K",
+        前撮り確定上代: "L",
+        前撮り確定下代: "M",
+        前撮り変動率: "N",
 
-        前撮りオプション1打ち合わせ商品: "P",
-        前撮りオプション1確定商品: "Q",
-        前撮りオプション1打ち合わせ上代: "R",
-        前撮りオプション1打ち合わせ下代: "S",
-        前撮りオプション1確定上代: "T",
-        前撮りオプション1確定下代: "U",
+        前撮り2打ち合わせ商品: "O",
+        前撮り2確定商品: "P",
+        前撮り2撮影日:"Q",
+        前撮り2打ち合わせ上代: "R",
+        前撮り2打ち合わせ下代: "S",
+        前撮り2確定上代: "T",
+        前撮り2確定下代: "U",
+        前撮り2変動率: "V",
 
-        前撮りオプション2打ち合わせ商品: "V",
-        前撮りオプション2確定商品: "W",
-        前撮りオプション2打ち合わせ上代: "X",
-        前撮りオプション2打ち合わせ下代: "Y",
-        前撮りオプション2確定上代: "Z",
-        前撮りオプション2確定下代: "AA",
+        前撮り3打ち合わせ商品: "W",
+        前撮り3確定商品: "X",
+        前撮り3撮影日:"Y",
+        前撮り3打ち合わせ上代: "Z",
+        前撮り3打ち合わせ下代: "AA",
+        前撮り3確定上代: "AB",
+        前撮り3確定下代: "AC",
+        前撮り3変動率: "AD",
 
-        前撮りオプション3打ち合わせ商品: "AB",
-        前撮りオプション3確定商品: "AC",
-        前撮りオプション3打ち合わせ上代: "AD",
-        前撮りオプション3打ち合わせ下代: "AE",
-        前撮りオプション3確定上代: "AF",
-        前撮りオプション3確定下代: "AG",
+        前撮りオプション1打ち合わせ商品: "AE",
+        前撮りオプション1確定商品: "AF",
+        前撮りオプション1打ち合わせ上代: "AG",
+        前撮りオプション1打ち合わせ下代: "AH",
+        前撮りオプション1確定上代: "AI",
+        前撮りオプション1確定下代: "AJ",
 
-        前撮りオプション打ち合わせ総額上代: "AH",
-        前撮りオプション打ち合わせ総額下代: "AI",
-        前撮りオプション確定総額上代: "AJ",
-        前撮りオプション確定総額下代: "AK",
-        前撮りオプション変動率: "AL",
+        前撮りオプション2打ち合わせ商品: "AK",
+        前撮りオプション2確定商品: "AL",
+        前撮りオプション2打ち合わせ上代: "AM",
+        前撮りオプション2打ち合わせ下代: "AN",
+        前撮りオプション2確定上代: "AO",
+        前撮りオプション2確定下代: "AP",
 
-        前撮り打ち合わせ総額上代: "AM",
-        前撮り打ち合わせ総額下代: "AN",
-        前撮り確定総額上代: "AO",
-        前撮り確定総額下代: "AP",
-        前撮り変動率: "AQ",
+        前撮りオプション3打ち合わせ商品: "AQ",
+        前撮りオプション3確定商品: "AR",
+        前撮りオプション3打ち合わせ上代: "AS",
+        前撮りオプション3打ち合わせ下代: "AT",
+        前撮りオプション3確定上代: "AU",
+        前撮りオプション3確定下代: "AV",
+
+        前撮りオプション打ち合わせ総額上代: "AW",
+        前撮りオプション打ち合わせ総額下代: "AX",
+        前撮りオプション確定総額上代: "AY",
+        前撮りオプション確定総額下代: "AZ",
+        前撮りオプション変動率: "BA",
+
+        前撮り打ち合わせ総額上代: "BB",
+        前撮り打ち合わせ総額下代: "BC",
+        前撮り確定総額上代: "BD",
+        前撮り確定総額下代: "BE",
+        前撮り変動率: "BF",
 
         //担当売上票
         担当初期見積もり総額: "C",
@@ -441,7 +515,7 @@ function Liblary() {
 
       this.menName = this._getInfo("menName"); //新郎名前取得変数代入
       this.womenName = this._getInfo("womenName"); //新婦名前取得変数代入
-      this.MenWomenName = this.menName + "\t" + this.womenName; //施工管理表シートに記載する形式に新郎新婦名をフォーマットする
+      this.MenWomenName = this.menName + " " + this.womenName; //施工管理表シートに記載する形式に新郎新婦名をフォーマットする
 
       this.partyRoomName = this._getInfo("partyRoomName"); //披露宴会場名取得変数代入
 
@@ -490,6 +564,29 @@ function Liblary() {
       this.vtrOption1 = this._getInfo("vtrOption1", this.vsArray);
       this.vtrOption2 = this._getInfo("vtrOption2", this.vsArray);
       this.vtrTelop = this._getInfo("vtrTelop", this.vsArray);
+      this.vtrEndItemBgm = this._getInfo("vtrEndItemBgm", this.vsArray);
+      this.vtrProfileItemBgm = this._getInfo("vtrProfileItemBgm", this.vsArray);
+      
+      this.prephotoItem1 = this._getInfo("prephotoItem1");
+      this.prephotoItem2 = this._getInfo("prephotoItem2");
+      this.prephotoItem3 = this._getInfo("prephotoItem3");
+      
+      this.prephotoItem1Price = this._getInfo("prephotoItem1Price");
+      this.prephotoItem2Price = this._getInfo("prephotoItem2Price");
+      this.prephotoItem3Price = this._getInfo("prephotoItem3Price");
+      
+      this.prephotoOption1 = this._getInfo("prephotoOption1");
+      this.prephotoOption2 = this._getInfo("prephotoOption2");
+      this.prephotoOption3 = this._getInfo("prephotoPhotographer");
+      
+      this.prephotoOption1Price = this._getInfo("prephotoOption1Price");
+      this.prephotoOption2Price = this._getInfo("prephotoOption2Price");
+      this.prephotoPhotographerPrice = this._getInfo("prephotoPhotographerPrice");
+
+     this.prephotoItem1Day = this._getInfo("prephotoItem1Day");
+     this.prephotoItem2Day = this._getInfo("prephotoItem2Day");
+     this.prephotoItem3Day = this._getInfo("prephotoItem3Day");
+
       
 
       this.changeDay = this._getInfo("changeDay", this.swArray); //挙式変更日を変数に格納
@@ -927,6 +1024,10 @@ function Liblary() {
         this.scheduleUrl,
         this.profitSheetName.当日写真商品
       );
+
+
+
+
       this._cellWrite(
         this.profitSheetItemGet.初期見積もり商品 + rowStrChange,
         this.firstPhotoItem,
@@ -957,6 +1058,14 @@ function Liblary() {
         this.scheduleUrl,
         this.profitSheetName.当日写真商品
       );
+     
+
+      
+
+
+
+
+
       this._cellWrite(
         this.profitSheetItemGet.FM初期見積もり商品 + rowStrChange,
         this.firstFmItem,
@@ -1005,6 +1114,10 @@ function Liblary() {
         this.scheduleUrl,
         this.profitSheetName.当日フォーマル商品
       );
+
+
+
+
       this._cellWrite(
         this.profitSheetItemGet.VTR初期見積もり商品 + rowStrChange,
         firstVtrItem,
@@ -1041,12 +1154,108 @@ function Liblary() {
         this.scheduleUrl,
         this.profitSheetName.当日VTR商品
       );
-    
+      this._cellWrite(
+        this.profitSheetItemGet.VTRオプション1打ち合わせ時商品 + rowStrChange,
+        this.vtrOption1,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRオプション2打ち合わせ時商品 + rowStrChange,
+        this.vtrOption2,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRオプション3打ち合わせ時商品 + rowStrChange,
+        this.vtrTelop,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRISUMエンドロール商品 + rowStrChange,
+        this.vtrEndItemBgm,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.VTRISUMプロフィール商品 + rowStrChange,
+        this.vtrProfileItemBgm,
+        this.scheduleUrl,
+        this.profitSheetName.当日VTR商品
+      );
+
+
+
+      this._cellWrite(
+        this.profitSheetItemGet.前撮り打ち合わせ商品 + rowStrChange,
+        this.prephotoItem1,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+
+      this._cellWrite(
+        this.profitSheetItemGet.前撮り撮影日 + rowStrChange,
+        this.prephotoItem1Day,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.前撮り2打ち合わせ商品 + rowStrChange,
+        this.prephotoItem2,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+
+      this._cellWrite(
+        this.profitSheetItemGet.前撮り2撮影日 + rowStrChange,
+        this.prephotoItem2Day,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.前撮り3打ち合わせ商品 + rowStrChange,
+        this.prephotoItem3,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+
+      this._cellWrite(
+        this.profitSheetItemGet.前撮り3撮影日 + rowStrChange,
+        this.prephotoItem3Day,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+
+      this._cellWrite(
+        this.profitSheetItemGet.前撮りオプション1打ち合わせ商品 + rowStrChange,
+        this.prephotoOption1,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.前撮りオプション2打ち合わせ商品 + rowStrChange,
+        this.prephotoOption2,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+      this._cellWrite(
+        this.profitSheetItemGet.前撮りオプション3打ち合わせ商品 + rowStrChange,
+        this.prephotoOption3,
+        this.scheduleUrl,
+        this.profitSheetName.ルアンジェ前撮り商品
+      );
+
+
+
+
+      Browser.msgBox("売上管理表に記載終了しました。確認してください");
 
       }else if(this.confirmCheck != ""){
 
-        const findRow = String(this._findRow());
+        const findRowGet = this._findRow(this.scheduleUrl,this.profitSheetName.当日写真商品,this.profitSerchCells,this.MenWomenName);
 
+        const findRow = String(findRowGet);
 
         this._cellWrite(
           this.profitSheetItemGet.確定時当日撮影商品 + findRow,
@@ -1139,8 +1348,102 @@ function Liblary() {
           this.profitSheetName.当日VTR商品
         );
 
+        this._cellWrite(
+          this.profitSheetItemGet.VTRオプション1確定時商品 + findRow,
+          this.vtrOption1,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTRオプション2確定時商品 + findRow,
+          this.vtrOption2,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTRオプション3確定時商品 + findRow,
+          this.vtrTelop,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+
+        this._cellWrite(
+          this.profitSheetItemGet.VTRISUMエンドロール商品 + findRow,
+          this.vtrEndItemBgm,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.VTRISUMプロフィール商品 + findRow,
+          this.vtrProfileItemBgm,
+          this.scheduleUrl,
+          this.profitSheetName.当日VTR商品
+        );
+
+        this._cellWrite(
+          this.profitSheetItemGet.前撮り確定商品 + rowStrChange,
+          this.prephotoItem1,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+  
+        this._cellWrite(
+          this.profitSheetItemGet.前撮り撮影日 + rowStrChange,
+          this.prephotoItem1Day,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.前撮り2確定商品 + rowStrChange,
+          this.prephotoItem2,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+  
+        this._cellWrite(
+          this.profitSheetItemGet.前撮り2撮影日 + rowStrChange,
+          this.prephotoItem2Day,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.前撮り3確定商品 + rowStrChange,
+          this.prephotoItem3,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+  
+        this._cellWrite(
+          this.profitSheetItemGet.前撮り3撮影日 + rowStrChange,
+          this.prephotoItem3Day,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+  
+        this._cellWrite(
+          this.profitSheetItemGet.前撮りオプション1確定商品 + rowStrChange,
+          this.prephotoOption1,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.前撮りオプション2確定商品 + rowStrChange,
+          this.prephotoOption2,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+        this._cellWrite(
+          this.profitSheetItemGet.前撮りオプション3確定商品 + rowStrChange,
+          this.prephotoOption3,
+          this.scheduleUrl,
+          this.profitSheetName.ルアンジェ前撮り商品
+        );
+
+
+        Browser.msgBox("売上管理表に記載終了しました。確認してください");
+
       }else{
-        msgBox("エラーのため処理を中止します");
+        Browser.msgBox("エラーのため処理を中止します");
         return
       }
 
@@ -1200,6 +1503,8 @@ function Liblary() {
       }
     }
 
+    
+
     _endProcessing() {
       //-------------------------------処理終了後の終了関数--------------------------------
       this._cellWriteActive(
@@ -1220,6 +1525,29 @@ function Liblary() {
     }
 
     //-------------------------------------------------------------------------以下の部分は処理用関数のため基本修正必要なし------------------------------------------------------------------
+    _scheduleColor(){//-------------------------------現在開発中---------------------------------
+      const sheetColorName = SpreadsheetApp.openByUrl(this.scheduleUrl).getSheetByName(this.sn);
+
+      const formatColorTime = this._dayFormat(this.ceremonyTime, "HH");
+      const formatColorMinite = this._dayFormat(this.ceremonyTime, "mm");
+
+      const ColumnNumber1 = Number(formatColorTime) - 8 ;
+      const ColumnNumber2 = Number(formatColorMinite)/15;
+
+      const ColumnNumberStandard = this.sheduleStandard + ColumnNumber1+ ColumnNumber2;
+
+      const ceremonyPartyCellStart = String(ColumnNumberStandard - 6);
+      const ceremonyPartyCellEnd = String(ColumnNumberStandard + 15);
+
+      
+      const standardRangePhoto = sheetColorName.getRange(this.photoScheduleCell+ ":"+ String(ColumnNumberStandard));
+      
+      const standardRangeVtr = sheetColorName.getRange(this.photoScheduleCell+ ":"+ String(ColumnNumberStandard));
+
+
+
+    }
+
 
     _setCell(sheet, range) {
       //アクティブなスプレッドシートから読み取るシートとセルを選択する関数
@@ -1372,6 +1700,10 @@ function Liblary() {
       this.vtrCell = this._cellreturn(this.vtrItemCellArray, timezone); //施工管理表にVTR商品を入れるセルの確定
 
       this.personCell = this._cellreturn(this.personCellArray, timezone); //施工管理表に指名カメラマンを入れるセルの確定
+
+      this.photoScheduleCell = this._cellreturn(this.schedulePhotoColorCellArray, timezone);
+
+      this.VtrScheduleCell = this._cellreturn(this.scheduleVtrColorCellArray, timezone);
     }
 
     _cellWrite(cell, value, url = this.scheduleUrl, sheetName = this.sn) {
@@ -1597,19 +1929,16 @@ function Liblary() {
       return this._arrayTotal(FirstPriceArray);
     }
 
-    _findRow(url,sheet,range,val,col){
+    _findRow(url,sheet,range,target){
 
-      var dat = SpreadsheetApp.openByUrl(url).getSheetByName(sheet).getDataRange(range).getValues(); //受け取ったシートのデータを二次元配列に取得
+      var dat = SpreadsheetApp.openByUrl(url).getSheetByName(sheet).getRange(range).getValues(); //受け取ったシートのデータを二次元配列に取得
     
-      for(var i=1;i<dat.length;i++){
-        if(dat[i][col-1] === val){
-          return i+1;
-        }
-      }
-      return 0;
+      const datArray = this._margeArray(dat);
+      
+      return datArray.indexOf(target)+4;
     }
 
-
+   
   }
 
   //--------------------以上オブジェクト---------------------------------------------
